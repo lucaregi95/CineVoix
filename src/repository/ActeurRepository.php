@@ -31,7 +31,7 @@ class ActeurRepository{
             'cp' => $_POST['cp']
         ));
         $result = $req->fetchall();
-        $acteur= new ActeurRepository($result["id_acteur"],$result["nom"],$result['prenom'],$result['email'],$result['date_naissance'],$result['telephone'],$result['rue'],$result['ville'],$result["cp"]);
+        $acteur= new Acteurs($result["id_acteur"],$result["nom"],$result['prenom'],$result['email'],$result['date_naissance'],$result['telephone'],$result['rue'],$result['ville'],$result["cp"]);
         return $acteur;
     }
 
