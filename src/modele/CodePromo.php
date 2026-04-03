@@ -1,22 +1,22 @@
 <?php
 class CodePromo
 {
-    private $idCodePromo;
-    private $codePromo;
-    private $pourcentageReduction;
+    private $id_code;
+    private $code;
+    private $pourcentage_reduc;
     private $etat;
 
     /**
-     * @param $idCodePromo
-     * @param $codePromo
-     * @param $pourcentageReduction
+     * @param $id_code
+     * @param $code
+     * @param $pourcentage_reduc
      * @param $etat
      */
-    public function __construct($idCodePromo, $codePromo, $pourcentageReduction, $etat)
+    public function __construct($id_code, $code, $pourcentage_reduc, $etat)
     {
-        $this->idCodePromo = $idCodePromo;
-        $this->codePromo = $codePromo;
-        $this->pourcentageReduction = $pourcentageReduction;
+        $this->id_code = $id_code;
+        $this->code = $code;
+        $this->pourcentage_reduc = $pourcentage_reduc;
         $this->etat = $etat;
     }
 
@@ -25,7 +25,7 @@ class CodePromo
      */
     public function getIdCodePromo()
     {
-        return $this->idCodePromo;
+        return $this->id_code;
     }
 
     /**
@@ -33,7 +33,7 @@ class CodePromo
      */
     public function getCodePromo()
     {
-        return $this->codePromo;
+        return $this->code;
     }
 
     /**
@@ -41,7 +41,7 @@ class CodePromo
      */
     public function getPourcentageReduction()
     {
-        return $this->pourcentageReduction;
+        return $this->pourcentage_reduc;
     }
 
     /**
@@ -53,31 +53,26 @@ class CodePromo
     }
 
     /**
-     * @param mixed $idCodePromo
+     * @param mixed $id_code
      */
-    public function setIdCodePromo($idCodePromo)
+    public function setIdCodePromo($id_code)
     {
-        $this->idCodePromo = $idCodePromo;
+        $this->id_code = $id_code;
     }
 
     /**
-     * @param mixed $codePromo
+     * @param mixed $code
      */
-    public function setCodePromo($codePromo)
+    public function setCodePromo($code)
     {
-        $this->codePromo = $codePromo;
+        $this->code = $code;
     }
 
     /**
-     * @param mixed $pourcentageReduction
+     * @param mixed $pourcentage_reduc
      */
-    public function setPourcentageReduction($pourcentageReduction)
-    {
-        if($pourcentageReduction<0){
-            echo "veuillez renseignez un nombre valide (au dessus de 0)";
-        }else{
-            $this->pourcentageReduction = $pourcentageReduction;
-        }
+    public function setPourcentageReduction($pourcentage_reduc){
+        $this->pourcentage_reduc = $pourcentage_reduc;
     }
 
     /**
