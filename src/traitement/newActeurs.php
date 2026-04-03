@@ -24,7 +24,3 @@ require_once '../modele/Acteurs.php';
         $realisateur = $_POST['telephone'];
     }
     $acteur = new Acteurs(null, $_POST['nom'] , $_POST['prenom'], $_POST['date_naissance'], $_POST['rue'], $_POST['ville'], $_POST['cp'] , $_POST['email'] , $_POST['telephone']);
-
-
-
-}
