@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 03 avr. 2026 à 12:13
+-- Généré le : ven. 03 avr. 2026 à 12:19
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.3.14
 
@@ -72,12 +72,12 @@ CREATE TABLE IF NOT EXISTS `film` (
   `nom` varchar(50) NOT NULL,
   `description` text NOT NULL,
   `duree` int NOT NULL COMMENT 'en minutes',
-  `affiche` varchar(70) NOT NULL COMMENT 'on sait pas (prof ?)',
-  `genre` varchar(50) NOT NULL,
-  `age_min` int NOT NULL,
-  `realisateur` varchar(50) NOT NULL,
-  `date_sortie` date NOT NULL,
-  `bande_annonce` varchar(70) NOT NULL,
+  `affiche` varchar(70) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'on sait pas (prof ?)',
+  `genre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `age_min` int DEFAULT NULL,
+  `realisateur` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `date_sortie` date DEFAULT NULL,
+  `bande_annonce` varchar(70) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`id_film`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
