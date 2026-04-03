@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 02 avr. 2026 à 15:19
+-- Généré le : ven. 03 avr. 2026 à 12:13
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.3.14
 
@@ -56,7 +56,29 @@ CREATE TABLE IF NOT EXISTS `codepromo` (
   `id_code` int NOT NULL AUTO_INCREMENT,
   `code` varchar(50) NOT NULL,
   `pourcentage_reduc` decimal(3,2) NOT NULL,
+  `etat` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `film`
+--
+
+DROP TABLE IF EXISTS `film`;
+CREATE TABLE IF NOT EXISTS `film` (
+  `id_film` int NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) NOT NULL,
+  `description` text NOT NULL,
+  `duree` int NOT NULL COMMENT 'en minutes',
+  `affiche` varchar(70) NOT NULL COMMENT 'on sait pas (prof ?)',
+  `genre` varchar(50) NOT NULL,
+  `age_min` int NOT NULL,
+  `realisateur` varchar(50) NOT NULL,
+  `date_sortie` date NOT NULL,
+  `bande_annonce` varchar(70) NOT NULL,
+  PRIMARY KEY (`id_film`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -75,8 +97,63 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   `ref_seance` int NOT NULL,
   `ref_code` int NOT NULL,
   `ref_acteur` int NOT NULL,
-  PRIMARY KEY (`id_reservation`)
+  PRIMARY KEY (`id_reservation`),
+  KEY `fk_reservation_seance` (`ref_seance`),
+  KEY `fk_reservation_codepromo` (`ref_code`),
+  KEY `fk_reservation_acteur` (`ref_acteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `salle`
+--
+
+DROP TABLE IF EXISTS `salle`;
+CREATE TABLE IF NOT EXISTS `salle` (
+  `id_salle` int NOT NULL AUTO_INCREMENT,
+  `code` varchar(10) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `capacite` int NOT NULL,
+  `etat` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id_salle`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `seances`
+--
+
+DROP TABLE IF EXISTS `seances`;
+CREATE TABLE IF NOT EXISTS `seances` (
+  `id_seance` int NOT NULL AUTO_INCREMENT,
+  `date_seance` date NOT NULL,
+  `ref_film` int NOT NULL,
+  `ref_salle` int NOT NULL,
+  PRIMARY KEY (`id_seance`),
+  KEY `fk_seances_film` (`ref_film`),
+  KEY `fk_seances_salle` (`ref_salle`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD CONSTRAINT `fk_reservation_acteur` FOREIGN KEY (`ref_acteur`) REFERENCES `acteurs` (`id_acteur`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_reservation_codepromo` FOREIGN KEY (`ref_code`) REFERENCES `codepromo` (`id_code`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_reservation_seance` FOREIGN KEY (`ref_seance`) REFERENCES `seances` (`id_seance`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `seances`
+--
+ALTER TABLE `seances`
+  ADD CONSTRAINT `fk_seances_film` FOREIGN KEY (`ref_film`) REFERENCES `film` (`id_film`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_seances_salle` FOREIGN KEY (`ref_salle`) REFERENCES `salle` (`id_salle`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
