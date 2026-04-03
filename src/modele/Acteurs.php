@@ -14,6 +14,7 @@ class Acteurs {
     private $cp;
     private $role;
     private $etat = 1;
+    private $date_creation;
 
     /**
      * @param $role
@@ -26,7 +27,7 @@ class Acteurs {
      * @param $ville
      * @param $cp
      */
-    public function __construct($id_Acteur, $nom, $prenom, $email, $dateNaissance, $telephone, $rue, $ville, $cp){
+    public function __construct($id_Acteur, $nom, $prenom, $email, $dateNaissance, $telephone, $rue, $ville, $cp) {
         $this->id_Acteur = $id_Acteur;
         $this->nom = $nom;
         $this->prenom = $prenom;
@@ -36,6 +37,8 @@ class Acteurs {
         $this->rue = $rue;
         $this->ville = $ville;
         $this->cp = $cp;
+        $this->etat = 1;
+        $this->date_creation = time();
     }
 
     /**
