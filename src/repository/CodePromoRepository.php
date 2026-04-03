@@ -30,12 +30,13 @@ class CodePromoRepository
         return $tabCodePromo;
     }
 
-    public function ajouterCodePromo(CodePromo $code){
-        $sql= "";
+    public function ajouterCodePromo(CodePromo $codePromo){
+        $sql= "INSERT INTO VALUES :id_code, :code, :pourcentage_reduction, :etat";
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':codePromo', $code->getCodePromo());
-        $req->bindValue(':codePromo', $code->getCodePromo());
-        $req->bindValue(':codePromo', $code->getCodePromo());
+        $req->bindValue(':id_code', $codePromo->getidCodePromo());
+        $req->bindValue(':code', $codePromo->getCodePromo());
+        $req->bindValue(':pourcentage_reduction', $codePromo->getPourcentageReduction());
+        $req->bindValue(':etat', $codePromo->getEtat());
         $req->execute();
     }
 }
