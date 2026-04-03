@@ -7,35 +7,36 @@ class CodePromoRepository
         $this->connexionBdd = (new Bdd())->getConnexionBdd();
     }
 
-    public function getCodePromo($idCodePromo){
-        $sql = "SELECT * FROM CodePromo WHERE idCodePromo = :idCodePromo";
+    public function getCodePromo($id_code){
+        $sql = "SELECT * FROM codepromo WHERE id_code = :id_code";
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':idCodePromo', $idCodePromo);
+        $req->bindValue(':id_code', $id_code);
         $req->execute();
         $result = $req->fetch();
-        $codePromo = new CodePromo($result["id_code_promo"],$result["code_promo"],$result["pourcentage_reduction"],$result["etat"]);
-        return $codePromo;
+        $code_promo = new CodePromo($result["id_code"],$result["code"],$result["pourcentage_reduc"],$result["etat"]);
+        return $code_promo;
     }
 
     public function getAllCodePromo(){
-        $sql = "SELECT * FROM CodePromo";
+        $sql = "SELECT * FROM codepromo";
         $req = $this->connexionBdd->prepare($sql);
         $req->execute();
         $results = $req->fetchAll();
         $tabCodePromo = array();
         foreach ($results as $result) {
-            $codePromo = new CodePromo($result["id_code_promo"],$result["code_promo"],$result["pourcentage_reduction"],$result["etat"]);
-        $tabCodePromo[] = $codePromo;
+            $code = new CodePromo($result["id_code"],$result["code"],$result["pourcentage_reduc"],$result["etat"]);
+        $tabCodePromo[] = $code;
         }
         return $tabCodePromo;
     }
 
     public function ajouterCodePromo(CodePromo $codePromo){
-        $sql= "";
+        $sql= "INSERT INTO VALUES :id_code, :code, :pourcentage_reduction, :etat";
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':codePromo', $codePromo->getCodePromo());
-        $req->bindValue(':codePromo', $codePromo->getCodePromo());
-        $req->bindValue(':codePromo', $codePromo->getCodePromo());
+        $req->bindValue(':id_code', $codePromo->getidCodePromo());
+        $req->bindValue(':code', $codePromo->getCodePromo());
+        $req->bindValue(':pourcentage_reduction', $codePromo->getPourcentageReduction());
+        $req->bindValue(':etat', $codePromo->getEtat());
         $req->execute();
     }
 }
