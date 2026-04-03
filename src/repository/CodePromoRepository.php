@@ -31,7 +31,7 @@ class CodePromoRepository
     }
 
     public function ajouterCodePromo(CodePromo $codePromo){
-        $sql= "INSERT INTO VALUES :id_code, :code, :pourcentage_reduction, :etat";
+        $sql= "INSERT INTO codepromo VALUES :id_code, :code, :pourcentage_reduction, :etat";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_code', $codePromo->getidCodePromo());
         $req->bindValue(':code', $codePromo->getCodePromo());
