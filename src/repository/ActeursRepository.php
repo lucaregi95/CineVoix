@@ -1,6 +1,6 @@
 <?php
 
-class ActeurRepository{
+class ActeursRepository{
     private $connexionBdd;
     public function __construct()
     {
