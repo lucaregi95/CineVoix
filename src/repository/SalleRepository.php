@@ -30,6 +30,7 @@ class SalleRepository
     }
 
     public function ajouterSalle(Salle $salle){
+        $sql = "INSERT INTO salle VALUES :id_salle,:code,:nom,:capacite,:etat";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_salle',$salle->getIdSalle());
         $req->bindValue(':code',$salle->getCode());

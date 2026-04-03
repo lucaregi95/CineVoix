@@ -30,7 +30,7 @@ class ReservationRepository
     }
 
     public function ajouterReservation(Reservation $reservation){
-        $sql = "INSERT INTO VALUES :id_reservation, :statut, :qte_plein_tarif, :qte_etudiant, :qte_senior";
+        $sql = "INSERT INTO reservation VALUES :id_reservation, :statut, :qte_plein_tarif, :qte_etudiant, :qte_senior";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_reservation', $reservation->getIdReservation());
         $req->bindValue(':statut', $reservation->getStatut());

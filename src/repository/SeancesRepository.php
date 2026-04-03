@@ -30,7 +30,7 @@ class SeancesRepository
     }
 
     public function ajouterReservation(Seances $seance){
-        $sql = "INSERT INTO VALUES :id_seance, :date_seance, :ref_film, :ref_salle";
+        $sql = "INSERT INTO seances VALUES :id_seance, :date_seance, :ref_film, :ref_salle";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_seance', $seance->getIdSeance());
         $req->bindValue(':date_seance', $seance->getDateSeance());

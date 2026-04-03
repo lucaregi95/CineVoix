@@ -7,7 +7,7 @@ class ActeursRepository{
         $this->connexionBdd = (new Bdd())->getConnexionBdd();
     }
 
-    public function getAllActeur($id_Acteurs) {
+    public function getActeur($id_Acteurs) {
         $sql = "SELECT * FROM acteurs WHERE id_Acteurs = :id_Acteurs";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':idActeurs', $id_Acteurs);
@@ -17,23 +17,24 @@ class ActeursRepository{
         return $acteur;
     }
 
-    public function getInscription(){
-        $sql = 'INSERT INTO acteurs(nom,prenom,email,date_naissance,telephone,rue,ville,cp) VALUES (:nom,:prenom, :email, :date_naissance, :telephone, :rue, :ville, :cp)';
+    public function ajouterActeur(Acteurs $acteur){
+        $sql= "INSERT INTO acteurs VALUES :id_acteur, :nom, :prenom, :email, :mdp, :tel, :rue, :cp, :ville, :date_naissance,:role,:etat,:date_creation";
         $req = $this->connexionBdd->prepare($sql);
-        $req->execute(array(
-            'nom' => $_POST['nom'],
-            'prenom' => $_POST['prenom'],
-            'email' => $_POST['email'],
-            'date_naissance' => $_POST['date_naissance'],
-            'telephone' => $_POST['telephone'],
-            'rue' => $_POST['rue'],
-            'ville' => $_POST['ville'],
-            'cp' => $_POST['cp']
-        ));
-        $result = $req->fetchall();
-        $acteur= new Acteurs($result["id_acteur"],$result["nom"],$result['prenom'],$result['email'],$result['date_naissance'],$result['telephone'],$result['rue'],$result['ville'],$result["cp"]);
-        return $acteur;
+        $req->bindValue(':id_acteur', $acteur->getIdActeur());
+        $req->bindValue(':nom', $acteur->getNom());
+        $req->bindValue(':prenom', $acteur->getPrenom());
+        $req->bindValue(':prenom', $acteur->getPrenom());
+        $req->bindValue(':prenom', $acteur->getPrenom());
+        $req->bindValue(':prenom', $acteur->getPrenom());
+        $req->bindValue(':prenom', $acteur->getPrenom());
+        $req->bindValue(':prenom', $acteur->getPrenom());
+        $req->bindValue(':prenom', $acteur->getPrenom());
+        $req->bindValue(':prenom', $acteur->getPrenom());
+        $req->bindValue(':prenom', $acteur->getPrenom());
+        $req->bindValue(':etat', $acteur->getEtat());
+        $req->execute();
     }
+
 
 
 
