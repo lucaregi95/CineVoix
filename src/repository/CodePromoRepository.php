@@ -8,7 +8,7 @@ class CodePromoRepository
     }
 
     public function getCodePromo($idCodePromo){
-        $sql = "SELECT * FROM CodePromo WHERE idCodePromo = :idCodePromo";
+        $sql = "SELECT * FROM CodePromo WHERE id_code = :idCodePromo";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':idCodePromo', $idCodePromo);
         $req->execute();
@@ -31,11 +31,12 @@ class CodePromoRepository
     }
 
     public function ajouterCodePromo(CodePromo $codePromo){
-        $sql= "";
+        $sql= "INSERT INTO VALUES :id_code, :code, :pourcentage_reduction, :etat";
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':codePromo', $codePromo->getCodePromo());
-        $req->bindValue(':codePromo', $codePromo->getCodePromo());
-        $req->bindValue(':codePromo', $codePromo->getCodePromo());
+        $req->bindValue(':id_code', $codePromo->getidCodePromo());
+        $req->bindValue(':code', $codePromo->getCodePromo());
+        $req->bindValue(':pourcentage_reduction', $codePromo->getPourcentageReduction());
+        $req->bindValue(':etat', $codePromo->getEtat());
         $req->execute();
     }
 }
