@@ -7,6 +7,7 @@ class Acteurs {
     private $nom;
     private $prenom;
     private $email;
+    private $mdp;
     private $dateNaissance;
     private $telephone;
     private $rue;
@@ -21,17 +22,19 @@ class Acteurs {
      * @param $nom
      * @param $prenom
      * @param $email
+     * @param $mdp
      * @param $dateNaissance
      * @param $telephone
      * @param $rue
      * @param $ville
      * @param $cp
      */
-    public function __construct($id_Acteur, $nom, $prenom, $email, $dateNaissance, $telephone, $rue, $ville, $cp) {
+    public function __construct($id_Acteur, $nom, $prenom, $email, $mdp, $dateNaissance, $telephone, $rue, $ville, $cp) {
         $this->id_Acteur = $id_Acteur;
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->email = $email;
+        $this->mdp = $mdp;
         $this->dateNaissance = $dateNaissance;
         $this->telephone = $telephone;
         $this->rue = $rue;
@@ -39,6 +42,7 @@ class Acteurs {
         $this->cp = $cp;
         $this->etat = 1;
         $this->date_creation = time();
+        $this->role = "user";
     }
 
     /**
@@ -96,6 +100,27 @@ class Acteurs {
     {
         $this->email = $email;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMdp()
+    {
+        return $this->mdp;
+    }
+
+    /**
+     * @param mixed $mdp
+     */
+    public function setMdp($mdp)
+    {
+        $this->mdp = $mdp;
+    }
+
+    /**
+     * @param mixed $mdp
+     */
+
 
     /**
      * @return mixed
@@ -207,6 +232,22 @@ class Acteurs {
     public function setEtat($etat)
     {
         $this->etat = $etat;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDateCreation()
+    {
+        return $this->date_creation;
+    }
+
+    /**
+     * @param int $date_creation
+     */
+    public function setDateCreation($date_creation)
+    {
+        $this->date_creation = $date_creation;
     }
 
 

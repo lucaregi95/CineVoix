@@ -48,7 +48,7 @@ class FilmRepository
         $req->bindValue(':realisateur', $film->getRealisateur());
         $req->bindValue(':date_sortie', $film->getDateSortie());
         $req->bindValue(':bande_annonce', $film->getBandeAnnonce());
-        $req->execute();
+        return $req->execute();
     }
 
     public function supprimerFilm(Film $film){
@@ -57,4 +57,5 @@ class FilmRepository
         $req->bindValue(':idfilm', $film->getIdFilm());
         $req->execute();
     }
+
 }
