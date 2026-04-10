@@ -3,7 +3,7 @@
 class Acteurs {
 
 
-    private $id_Acteur;
+    private $id_acteur;
     private $nom;
     private $prenom;
     private $email;
@@ -29,8 +29,8 @@ class Acteurs {
      * @param $ville
      * @param $cp
      */
-    public function __construct($id_Acteur, $nom, $prenom, $email, $mdp, $dateNaissance, $telephone, $rue, $ville, $cp) {
-        $this->id_Acteur = $id_Acteur;
+    public function __construct($id_acteur, $nom, $prenom, $email, $mdp, $dateNaissance, $telephone, $rue, $ville, $cp) {
+        $this->id_acteur = $id_acteur;
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->email = $email;
@@ -50,7 +50,7 @@ class Acteurs {
      */
     public function getIdActeur()
     {
-        return $this->id_Acteur;
+        return $this->id_acteur;
     }
 
     /**

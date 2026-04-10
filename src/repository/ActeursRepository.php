@@ -7,18 +7,30 @@ class ActeursRepository{
         $this->connexionBdd = (new Bdd())->getConnexionBdd();
     }
 
-    public function getAllActeur($id_Acteurs) {
+    public function getActeur($id_Acteurs) {
         $sql = "SELECT * FROM acteurs WHERE id_Acteurs = :id_Acteurs";
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':idActeurs', $id_Acteurs);
+        $req->bindValue(':idActeur', $id_Acteurs);
         $req->execute();
         $result = $req->fetch();
-        $acteur = new Acteurs($result["id_Acteur"],$result["nom"],$result["prenom"],$result["email"],$result["date_naissance"],$result["telephone"],$result["rue"],$result["ville"],$result["cp"]);
+        $acteur = new Acteurs($result["id_Acteur"],$result["nom"],$result["prenom"],$result["email"], $result["mdp"],$result["date_naissance"],$result["telephone"],$result["rue"],$result["ville"],$result["cp"]);
         return $acteur;
+    }
+    
+    public function getAllActeurs() {
+        $sql = "SELECT * FROM acteurs";
+        $req = $this->connexionBdd->prepare($sql);
+        $req->execute();
+        $results = $req->fetchAll();
+        $acteur = array();
+        foreach ($results as $result) {$acteur = new Acteurs($result["id_Acteur"],$result["nom"],$result["prenom"],$result["email"], $result["mdp"],$result["date_naissance"],$result["telephone"],$result["rue"],$result["ville"],$result["cp"]);
+            $tabActeur[] = $acteur;
+        }
+        return $tabActeur;
     }
 
     public function ajouterActeur(Acteurs $acteur){
-        $sql= "INSERT INTO acteurs VALUES :id_acteur, :nom, :prenom, :email, :mdp, :tel, :rue, :cp, :ville, :date_naissance,:role,:etat,:date_creation";
+        $sql= "INSERT INTO acteurs VALUES (:id_acteur, :nom, :prenom, :email, :mdp, :tel, :rue, :cp, :ville, :date_naissance,:role,:etat,:date_creation)";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_acteur', $acteur->getIdActeur());
         $req->bindValue(':nom', $acteur->getNom());
@@ -45,13 +57,16 @@ class ActeursRepository{
         $req->bindValue(':prenom', $acteurs->getPrenom());
         $req->bindValue(':mdp',  $acteurs->getMdp());
         $req->bindValue(':cp',  $acteurs->getCp());
-        $req->bindValue(':id_Acteurs', $acteurs->getIdActeur());
+        $req->bindValue(':id_Acteur', $acteurs->getIdActeur());
         return $req->execute();
-
-
-
-
-
+    }
+    
+    public function supprimerActeur(Acteurs $acteurs){
+       
+        $sql = 'DELETE FROM acteurs WHERE id_Acteur = :id_Acteur';
+        $req = $this->connexionBdd->prepare($sql);
+        $req->bindValue(':idActeur', $acteurs->getIdActeur());
+        $req->execute();
     }
 
 

@@ -38,4 +38,24 @@ class SeancesRepository
         $req->bindValue(':ref_salle', $seance->getRefSalle());
         $req->execute();
     }
+
+    public function modifierReservation(Seances $seance){
+        $sql ='UPDATE seances SET date_seance = :date_seance WHERE id_seance = :id_seance';
+        $req = $this->connexionBdd->prepare($sql);
+        $req->bindValue(':date_seance', $seance->getDateSeance());
+        $req->bindValue(':id_seance', $seance->getIdSeance());
+        $req->execute();
+        return $req->execute();
+    }
+
+    public function supprimerReservation(Seances $seance){
+        $sql = 'DELETE FROM seances WHERE id_seance = :id_seance';
+        $req = $this->connexionBdd->prepare($sql);
+        $req->bindValue(':id_seance', $seance->getIdSeance());
+        $req->execute();
+
+    }
+
+
+
 }

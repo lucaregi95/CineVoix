@@ -3,7 +3,27 @@
 require_once "../../src/bdd/Bdd.php";
 require_once "../../src/modele/Acteurs.php";
 require_once "../../src/repository/ActeursRepository.php";
+require_once "../../src/traitement/newActeurs.php";
 
+if (isset($acteur)){
+    $rep = new ActeursRepository();
+    $rep -> ajouterActeur($acteur);
+    header("Location :Acteurs.php");
+    exit();
+}
+//sert a ce que quand on rafraichis ca ne remet pas dans la bdd
+$_POST['nom']=null;
+$_POST['prenom']=null;
+$_POST['email']=null;
+$_POST['mdp']=null;
+$_POST['tel']=null;
+$_POST['rue']=null;
+$_POST['cp']=null;
+$_POST['ville']=null;
+$_POST['date_naissance']=null;
+$_POST['role']=null;
+$_POST['etat']=null;
+$_POST['date_creation']=null;
 ?>
 <html>
 <body>
