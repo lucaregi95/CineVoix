@@ -37,24 +37,15 @@ class ActeursRepository{
 
 
 
-    public function modifierActeur(){
+    public function modifierActeur(Acteurs  $acteurs){
         $sql = 'UPDATE acteurs SET nom = :nom , prenom = :prenom , mdp = :mdp , cp = :cp , ville = : ville , rue = :rue WHERE id_Acteurs = :id_Acteurs';
         $req = $this->connexionBdd->prepare($sql);
-        //$req->execute(array(
-        //'nom' =>$nom,
-        //'prenom' => $prenom,
-        // 'mdp' => $mdp,
-        // 'cp' => $cp,
-        // 'ville' => $ville,
-        // 'rue' => $rue,
-    //));
-
-        $req->bindValue(':nom', $_POST['nom']);
-        $req->bindValue(':prenom', $_POST['prenom']);
-        $req->bindValue(':mdp', $_POST['mdp']);
-        $req->bindValue(':cp', $_POST['cp']);
-        $req->bindValue(':id_Acteurs', $_POST['id_Acteurs']);
-        $req->execute();
+        $req->bindValue(':nom', $acteurs->getNom());
+        $req->bindValue(':prenom', $acteurs->getPrenom());
+        $req->bindValue(':mdp',  $acteurs->
+        $req->bindValue(':cp',  $acteurs->getCp(),
+        $req->bindValue(':id_Acteurs', $acteurs->getIdActeur();
+        return $req->execute();
 
 
 

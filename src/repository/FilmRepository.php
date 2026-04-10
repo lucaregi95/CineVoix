@@ -48,6 +48,13 @@ class FilmRepository
         $req->bindValue(':realisateur', $film->getRealisateur());
         $req->bindValue(':date_sortie', $film->getDateSortie());
         $req->bindValue(':bande_annonce', $film->getBandeAnnonce());
+        return $req->execute();
+    }
+
+    public function supprimerFilm(Film $film){
+        $sql = "DELETE FROM film WHERE id_film = :idfilm";
+        $req = $this->connexionBdd->prepare($sql);
+        $req->bindValue(':idfilm', $film->getIdFilm());
         $req->execute();
     }
 
