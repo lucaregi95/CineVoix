@@ -12,11 +12,11 @@ class SalleRepository
         $req->bindValue(':id_salle',$id_salle);
         $req->execute();
         $result = $req->fetch();
-        $salle = new Salle($result["id_salle"], $result["code"], $result["nom"], $result["capacite"], $result["prix"], $result["etat"]);
+        $salle = new Salle($result["id_salle"], $result["code"], $result["nom"], $result["capacite"], $result["etat"]);
         return $salle;
     }
 
-    public function getALlSalle(){
+    public function getAllSalle(){
         $sql="SELECT * FROM salle";
         $req = $this->connexionBdd->prepare($sql);
         $req->execute();
@@ -37,6 +37,17 @@ class SalleRepository
         $req->bindValue(':nom',$salle->getNom());
         $req->bindValue(':capacite',$salle->getCapacite());
         $req->bindValue(':etat',$salle->getEtat());
+        $req->execute();
+    }
+
+    public function modifierSalle(Salle $salle){
+        $sql = 'UPDATE salle SET code =:code, nom=:nom, capacite=:capacite, etat=:etat WHERE id_salle = :id_salle';
+        $req = $this->connexionBdd->prepare($sql);
+        $req->bindValue(':code', $salle->getCode());
+        $req->bindValue(':nom', $salle->getNom());
+        $req->bindValue(':capacite', $salle->getCapacite());
+        $req->bindValue(':id_salle',$salle->getIdSalle());
+        $req->bindValue(':etat', $salle->getEtat());
         $req->execute();
     }
 }

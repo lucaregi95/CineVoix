@@ -9,7 +9,7 @@ if(isset($salle)){
     exit();
 }
 
-//pour eviter de remettre les données dans la bdd au reload de la page
+
 $_POST['code']=null;
 $_POST['nom']=null;
 $_POST['capacite']=null;
@@ -29,7 +29,7 @@ $_POST['capacite']=null;
         <div class="col-md-6">
             <div class="mb-3">
                 <label>Code de la salle :</label>
-                <input  name="code" id="code" type="number"step="0.01" min="0" placeholder="0.00" required>
+                <input  name="code" id="code" type="text" required>
             </div>
             <div class="mb-3">
                 <label>Nom de la salle :</label>

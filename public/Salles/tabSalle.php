@@ -15,6 +15,9 @@ $tabSalle = $rep -> getAllSalle();
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
 <body>
+<form method="post" action="ajoutSalle.php">
+    <button>Ajouter</button>
+</form>
 <table>
     <thead>
     <tr>
@@ -23,6 +26,8 @@ $tabSalle = $rep -> getAllSalle();
         <th>Nom de la salle</th>
         <th>Capacite de la salle</th>
         <th>Etat</th>
+        <th>Modifier</th>
+        <th>Supprimer</th>
     </tr>
     </thead>
 
@@ -34,6 +39,12 @@ $tabSalle = $rep -> getAllSalle();
         <td><?=$salle->getNom()?></td>
         <td><?=$salle->getCapacite()?></td>
         <td><?=$salle->getEtat()?></td>
+        <td>
+            <form method="post" action="modificationSalle.php">
+                <button type="submit">Modifier</button>
+                <input type="hidden" name="id" value="<?=$salle->getIdSalle()?>">
+            </form>
+        </td>
     </tr>
     </tbody>
     <?php } ?>
