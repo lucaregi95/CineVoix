@@ -42,6 +42,7 @@ class Acteurs {
         $this->cp = $cp;
         $this->etat = 1;
         $this->date_creation = time();
+        $this->role = "user";
     }
 
     /**
