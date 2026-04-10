@@ -9,8 +9,7 @@ if(isset($code)){
     header('Location: '.$_SERVER['PHP_SELF']);
     exit();
 }
-$_POST['pourcentage_reduc']=null;
-$_POST['code']=null;
+
 
 ?>
 <!DOCTYPE html>
