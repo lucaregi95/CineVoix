@@ -42,9 +42,9 @@ class ActeursRepository{
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':nom', $acteurs->getNom());
         $req->bindValue(':prenom', $acteurs->getPrenom());
-        $req->bindValue(':mdp',  $acteurs->
-        $req->bindValue(':cp',  $acteurs->getCp(),
-        $req->bindValue(':id_Acteurs', $acteurs->getIdActeur();
+        $req->bindValue(':mdp',  $acteurs->getMdp());
+        $req->bindValue(':cp',  $acteurs->getCp());
+        $req->bindValue(':id_Acteurs', $acteurs->getIdActeur());
         return $req->execute();
 
 

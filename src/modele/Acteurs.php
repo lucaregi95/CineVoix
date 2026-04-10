@@ -7,6 +7,7 @@ class Acteurs {
     private $nom;
     private $prenom;
     private $email;
+    private $mdp;
     private $dateNaissance;
     private $telephone;
     private $rue;
@@ -27,7 +28,7 @@ class Acteurs {
      * @param $ville
      * @param $cp
      */
-    public function __construct($id_Acteur, $nom, $prenom, $email, $dateNaissance, $telephone, $rue, $ville, $cp) {
+    public function __construct($id_Acteur, $nom, $prenom, $email, $dateNaissance, $telephone, $rue, $ville, $cp, $mdp) {
         $this->id_Acteur = $id_Acteur;
         $this->nom = $nom;
         $this->prenom = $prenom;
@@ -39,6 +40,8 @@ class Acteurs {
         $this->cp = $cp;
         $this->etat = 1;
         $this->date_creation = time();
+        $this->mdp = $mdp;
+        $this->role = "user";
     }
 
     /**
@@ -207,6 +210,22 @@ class Acteurs {
     public function setEtat($etat)
     {
         $this->etat = $etat;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMdp()
+    {
+        return $this->mdp;
+    }
+
+    /**
+     * @param mixed $mdp
+     */
+    public function setMdp($mdp)
+    {
+        $this->mdp = $mdp;
     }
 
 
