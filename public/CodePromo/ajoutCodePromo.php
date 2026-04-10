@@ -34,7 +34,12 @@ if(isset($code)){
             </div>
             <button type="submit">Valider</button>
 
+
 </form>
+<form method="post" action="tabCodePromo.php">
+    <button type="submit">Retour</button>
+</form>
+
 </body>
 </html>
 

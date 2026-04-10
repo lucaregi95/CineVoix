@@ -11,7 +11,7 @@ if (isset($acteur)){
     header("Location :Acteurs.php");
     exit();
 }
-//sert a ce que quand on rafraichis ca ne remet pas dans la bdd
+//sert a ce que quand on rafraichit ca ne remet pas dans la bdd
 $_POST['nom']=null;
 $_POST['prenom']=null;
 $_POST['email']=null;

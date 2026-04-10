@@ -42,7 +42,7 @@ class CodePromoRepository
     public function supprimerCodePromo(CodePromo $codePromo){
         $sql = "DELETE FROM codepromo WHERE id_code = :idcode";
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':idfilm', $codePromo->getIdCodePromo());
+        $req->bindValue(':idcode', $codePromo->getIdCodePromo());
         $req->execute();
     }
 
