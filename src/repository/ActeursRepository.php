@@ -18,7 +18,7 @@ class ActeursRepository{
     }
 
     public function ajouterActeur(Acteurs $acteur){
-        $sql= "INSERT INTO acteurs VALUES :id_acteur, :nom, :prenom, :email, :mdp, :tel, :rue, :cp, :ville, :date_naissance,:role,:etat,:date_creation";
+        $sql= "INSERT INTO acteurs VALUES (:id_acteur, :nom, :prenom, :email, :mdp, :tel, :rue, :cp, :ville, :date_naissance,:role,:etat,:date_creation)";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_acteur', $acteur->getIdActeur());
         $req->bindValue(':nom', $acteur->getNom());
