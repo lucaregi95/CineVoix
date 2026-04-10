@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__.'/../../bdd/Bdd.php';
-require_once __DIR__.'/../../modele/CodePromo.php';
+require_once __DIR__ . '/../../src/bdd/Bdd.php';
+require_once __DIR__ . '/../../src/modele/Acteurs.php';
 
 
 if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && isset($_POST['mdp']) && isset($_POST['tel']) && isset($_POST['rue']) && isset($_POST['cp']) && isset($_POST['ville']) && isset($_POST['date_naissance']) && isset($_POST['role']) && isset($_POST['etat']) &&  isset($_POST['date_creation'])) {
