@@ -8,7 +8,7 @@ require_once "../../src/traitement/newActeurs.php";
 if (isset($acteur)){
     $rep = new ActeursRepository();
     $rep -> ajouterActeur($acteur);
-    header("Location :Acteurs.php");
+    header('Location: '.$_SERVER['PHP_SELF']);
     exit();
 }
 //sert a ce que quand on rafraichit ca ne remet pas dans la bdd

@@ -36,7 +36,7 @@ class FilmRepository
 
     public function ajouterFilm(Film $film)
     {
-        $sql = "INSERT INTO film VALUES :id_film,:nom,:description,:duree,:affiche,:genre,:age_min,:realisateur,:date_sortie,:bande_annonce):";
+        $sql = "INSERT INTO film VALUES (:id_film,:nom,:description,:duree,:affiche,:genre,:age_min,:realisateur,:date_sortie,:bande_annonce)";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_film', $film->getIdFilm());
         $req->bindValue(':nom', $film->getNom());
@@ -56,6 +56,22 @@ class FilmRepository
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':idfilm', $film->getIdFilm());
         $req->execute();
+    }
+
+    public function modifierFilm(Film $film){
+        $sql='UPDATE film SET nom = :nom , description = :description , duree = :duree , affiche = :affiche , genre = :genre , age_min = :age_min , realisateur = :realisateur , date_sortie = :date_sortie , bande_annonce = :bande_annonce WHERE id_film = :idfilm';
+        $req = $this->connexionBdd->prepare($sql);
+        $req->bindValue(':idfilm', $film->getIdFilm());
+        $req->bindValue(':nom', $film->getNom());
+        $req->bindValue(':description', $film->getDescription());
+        $req->bindValue(':duree', $film->getDuree());
+        $req->bindValue(':affiche', $film->getAffiche());
+        $req->bindValue(':genre', $film->getGenre());
+        $req->bindValue(':age_min', $film->getAgeMin());
+        $req->bindValue(':realisateur', $film->getRealisateur());
+        $req->bindValue(':date_sortie', $film->getDateSortie());
+        $req->bindValue(':bande_annonce', $film->getBandeAnnonce());
+        return $req->execute();
     }
 
 }
