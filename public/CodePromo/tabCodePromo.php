@@ -14,6 +14,9 @@ $tabCodePromo = $rep -> getAllCodePromo();
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
 <body>
+<form method="post" action="ajoutCodePromo.php">
+    <button>Ajouter</button>
+</form>
 <table>
     <thead>
         <tr>
