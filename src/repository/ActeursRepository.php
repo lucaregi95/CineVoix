@@ -23,15 +23,16 @@ class ActeursRepository{
         $req->bindValue(':id_acteur', $acteur->getIdActeur());
         $req->bindValue(':nom', $acteur->getNom());
         $req->bindValue(':prenom', $acteur->getPrenom());
-        $req->bindValue(':prenom', $acteur->getPrenom());
-        $req->bindValue(':prenom', $acteur->getPrenom());
-        $req->bindValue(':prenom', $acteur->getPrenom());
-        $req->bindValue(':prenom', $acteur->getPrenom());
-        $req->bindValue(':prenom', $acteur->getPrenom());
-        $req->bindValue(':prenom', $acteur->getPrenom());
-        $req->bindValue(':prenom', $acteur->getPrenom());
-        $req->bindValue(':prenom', $acteur->getPrenom());
+        $req->bindValue(':email', $acteur->getEmail());
+        $req->bindValue(':mdp', $acteur->getMdp());
+        $req->bindValue(':tel', $acteur->getTelephone());
+        $req->bindValue(':rue', $acteur->getRue());
+        $req->bindValue(':cp', $acteur->getCp());
+        $req->bindValue(':ville', $acteur->getVille());
+        $req->bindValue(':date_naissance', $acteur->getDateNaissance());
+        $req->bindValue(':role', $acteur->getRole());
         $req->bindValue(':etat', $acteur->getEtat());
+        $req->bindValue(':date_creation', $acteur->getDateCreation());
         $req->execute();
     }
 
