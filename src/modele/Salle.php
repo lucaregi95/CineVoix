@@ -15,13 +15,13 @@ class Salle{
      * @param $code
      * @param $id_salle
      */
-    public function __construct($etat, $capacite, $nom, $code, $id_salle)
+    public function __construct($id_salle, $code, $nom, $capacite, $etat )
     {
-        $this->etat = $etat;
-        $this->capacite = $capacite;
-        $this->nom = $nom;
-        $this->code = $code;
         $this->id_salle = $id_salle;
+        $this->code = $code;
+        $this->nom = $nom;
+        $this->capacite = $capacite;
+        $this->etat = $etat;
     }
 
     /**

@@ -16,7 +16,7 @@ if(isset($code)){
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Cinémoi - Accueil</title>
+    <title>Cinémoi - Ajout Code Promo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
 <body>
@@ -34,7 +34,12 @@ if(isset($code)){
             </div>
             <button type="submit">Valider</button>
 
+
 </form>
+<form method="post" action="tabCodePromo.php">
+    <button type="submit">Retour</button>
+</form>
+
 </body>
 </html>
 
