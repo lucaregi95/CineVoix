@@ -1,6 +1,6 @@
 <?php
-require_once '../bdd/Bdd.php';
-require_once '../modele/CodePromo.php';
+require_once __DIR__.'/../bdd/Bdd.php';
+require_once __DIR__.'/../modele/CodePromo.php';
 
 
 if(isset($_POST['code']) && isset($_POST['pourcentage_reduc'])){
