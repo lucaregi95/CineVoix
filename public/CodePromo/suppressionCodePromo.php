@@ -7,11 +7,12 @@ $id=$_POST["id"];
 
 $rep=new CodePromoRepository();
 $rep2=$rep->getCodePromo($id);
+if(isset($_POST["valide"])){
 if($_POST["valide"]=="oui"){
     $rep->supprimerCodePromo($rep2);
     header("Location: tabCodePromo.php");
     exit;
-}
+}}
 
 
 ?>

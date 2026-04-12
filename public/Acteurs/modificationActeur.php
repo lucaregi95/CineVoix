@@ -2,27 +2,24 @@
 require_once "../../src/traitement/newActeurs.php";
 require_once "../../src/repository/ActeursRepository.php";
 
-$id_Acteur = null;
+
 
 if (isset($_POST['id'])) {
-    $id_Acteur = $_POST['id'];
+    $id_acteur = $_POST['id'];
 } elseif (isset($_GET['id'])) {
-    $id_Acteur = $_GET['id'];
+    $id_acteur = $_GET['id'];
 }
 
-if ($id_Acteur === null) {
-    header("Location: listeActeurs.php");
-    exit();
-}
 
 $cpr = new ActeursRepository();
 if(isset($acteur)){
     $cpr->modifierActeur($acteur);
+
+
+
 }
 
-$o=$cpr->getActeur($id_Acteur);
-
-
+$o=$cpr->getActeur($id_acteur);
 
 
 
@@ -54,7 +51,7 @@ $o=$cpr->getActeur($id_Acteur);
             </div>
             <div class="mb-3">
                 <label>Mot de passe :</label>
-                <input name="mot_de_passe" type="password" value="<?php echo $o->getMdp()?>" required>
+                <input name="mdp" type="password" value="<?php echo $o->getMdp()?>" required>
             </div>
             <div class="mb-3">
                 <label>Telephone :</label>
@@ -62,11 +59,11 @@ $o=$cpr->getActeur($id_Acteur);
             </div>
             <div class="mb-3">
                 <label>Rue :</label>
-                <input name="rue" type="number" value="<?php echo $o->getRue()?>" required>
+                <input name="rue" type="text" value="<?php echo $o->getRue()?>" required>
             </div>
             <div class="mb-3">
                 <label>Code Postal :</label>
-                <input name="code_postal" type="number" value="<?php echo $o->getCp()?>" required>
+                <input name="cp" type="number" value="<?php echo $o->getCp()?>" required>
             </div>
             <div class="mb-3">
                 <label>Ville :</label>
@@ -76,14 +73,30 @@ $o=$cpr->getActeur($id_Acteur);
                 <label>Date de naissance :</label>
                 <input name="date_naissance" type="date" value="<?php echo $o->getDateNaissance()?>" required>
             </div>
+
             <div class="mb-3">
                 <label>Role :</label>
-                <input name="role" type="text" value="<?php echo $o->getRole()?>" required>
+                <?php if ($o->getRole()=="user"){?>
+                    <select name="role">
+                        <option value="user">Utilisateur</option>
+                        <option value="accueil">Accueil</option>
+                        <option value="admin">Administrateur</option>
+                    </select>
+                <?php } else if ($o->getRole()=="accueil"){?>
+                    <select name="role">
+                        <option value="accueil">Accueil</option>
+                        <option value="user">Utilisateur</option>
+                        <option value="admin">Administrateur</option>
+                    </select>
+                <?php } else{?>
+                    <select name="role">
+                        <option value="admin">Administrateur</option>
+                        <option value="accueil">Accueil</option>
+                        <option value="user">Utilisateur</option>
+                    </select>
+                <?php } ?>
             </div>
-            <div class="mb-3">
-                <label>Etat :</label>
-                <input name="etat" type="text" value="<?php echo $o->getEtat()?>" required>
-            </div>
+
             <div class="mb-3">
                 <label>Etat :</label>
                 <?php if ($o->getEtat()==1){?>
@@ -98,13 +111,15 @@ $o=$cpr->getActeur($id_Acteur);
                     </select>
                 <?php } ?>
             </div>
+
             <div class="mb-3">
                 <label>Date de creation :</label>
-                <input name="date_creation" type="text" value="<?php echo $o->getDateCreation()?>" required>
+                <input name="date_creation" type="text" value="<?php echo $o->getDateCreation()?>" disabled>
             </div>
-            <input type="hidden" name="id" value="<?php echo $id_Acteur ?>">
+
+            <input type="hidden" name="id_acteur" value="<?php echo $id_acteur?>">
             <button type="submit">Valider</button>
-            <button formaction="tabCodePromo.php">Retour</button>
+            <button formaction="tabActeur.php">Retour</button>
 
 
 </form>

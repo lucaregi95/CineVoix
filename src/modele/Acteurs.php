@@ -14,7 +14,7 @@ class Acteurs {
     private $ville;
     private $cp;
     private $role;
-    private $etat = 1;
+    private $etat;
     private $date_creation;
 
     /**
@@ -28,8 +28,9 @@ class Acteurs {
      * @param $rue
      * @param $ville
      * @param $cp
+     * @param $etat
      */
-    public function __construct($id_acteur, $nom, $prenom, $email, $mdp, $dateNaissance, $telephone, $rue, $ville, $cp) {
+    public function __construct($id_acteur, $nom, $prenom, $email, $mdp, $dateNaissance, $telephone, $rue, $ville, $cp, $role, $etat) {
         $this->id_acteur = $id_acteur;
         $this->nom = $nom;
         $this->prenom = $prenom;
@@ -40,9 +41,14 @@ class Acteurs {
         $this->rue = $rue;
         $this->ville = $ville;
         $this->cp = $cp;
-        $this->etat = 1;
-        $this->date_creation = time();
-        $this->role = "user";
+        $this->etat = $etat;
+        $this->role = $role;
+
+        $date = new DateTimeImmutable();
+        $date = $date->format('Y\-m\-d');
+        $this->date_creation = $date;
+
+
     }
 
     /**

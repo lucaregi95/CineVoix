@@ -6,7 +6,7 @@ require_once "../../src/repository/CodePromoRepository.php";
 if(isset($code)){
     $rep = new CodePromoRepository();
     $rep -> ajouterCodePromo($code);
-    header('Location: '.$_SERVER['PHP_SELF']);
+    header('Location: '.$_SERVER['PHP_SELF'].'?message=Code Promo bien ajouté !');
     exit();
 }
 
@@ -21,7 +21,9 @@ if(isset($code)){
 </head>
 <body>
 <form action="ajoutCodePromo.php" method="post">
-
+    <?php if(isset($_GET["message"])){?>
+    <h5><?php echo $_GET["message"]?></h5>
+    <?php }?>
     <div class="row">
         <div class="col-md-6">
             <div class="mb-3">

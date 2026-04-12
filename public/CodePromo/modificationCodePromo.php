@@ -25,12 +25,14 @@ $o=$cpr->getCodePromo($id);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Cinémoi - Accueil</title>
+    <title>Cinémoi - Modification Code Promo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
 <body>
-<form action="modificationCodePromo.php" method="post">
-
+<form action="modificationCodePromo.php?message=Code Promo modifié !" method="post">
+    <?php if(isset($_GET["message"])){?>
+        <h5><?php echo $_GET["message"]?></h5>
+    <?php }?>
     <div class="row">
         <div class="col-md-6">
             <div class="mb-3">

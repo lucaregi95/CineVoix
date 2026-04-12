@@ -52,6 +52,8 @@ $tabCodePromo = $rep -> getAllCodePromo();
     </tbody>
     <?php } ?>
 </table>
+
+
 </body>
 </html>
 

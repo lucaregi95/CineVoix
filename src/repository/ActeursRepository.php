@@ -7,13 +7,13 @@ class ActeursRepository{
         $this->connexionBdd = (new Bdd())->getConnexionBdd();
     }
 
-    public function getActeur($id_Acteurs) {
-        $sql = "SELECT * FROM acteurs WHERE id_Acteurs = :id_Acteurs";
+    public function getActeur($id_acteur) {
+        $sql = "SELECT * FROM acteurs WHERE id_acteur = :id_acteur";
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':id_Acteur', $id_Acteurs);
+        $req->bindValue(':id_acteur', $id_acteur);
         $req->execute();
         $result = $req->fetch();
-        $acteur = new Acteurs($result["id_Acteur"],$result["nom"],$result["prenom"],$result["email"], $result["mdp"],$result["date_naissance"],$result["telephone"],$result["rue"],$result["ville"],$result["cp"]);
+        $acteur = new Acteurs($result["id_acteur"],$result["nom"],$result["prenom"],$result["email"], $result["mdp"],$result["date_naissance"],$result["tel"],$result["rue"],$result["ville"],$result["cp"],$result["role"],$result["etat"]);
         return $acteur;
     }
     
@@ -22,9 +22,9 @@ class ActeursRepository{
         $req = $this->connexionBdd->prepare($sql);
         $req->execute();
         $results = $req->fetchAll();
-        $acteur = array();
+        $tabActeur = array();
         foreach ($results as $result) {
-            $tabActeur[] = new Acteurs($result["id_Acteur"],$result["nom"],$result["prenom"],$result["email"], $result["mdp"],$result["date_naissance"],$result["telephone"],$result["rue"],$result["ville"],$result["cp"]);
+            $tabActeur[] = new Acteurs($result["id_acteur"],$result["nom"],$result["prenom"],$result["email"], $result["mdp"],$result["date_naissance"],$result["tel"],$result["rue"],$result["ville"],$result["cp"],$result["role"],$result["etat"]);
         }
         return $tabActeur;
     }
@@ -50,20 +50,26 @@ class ActeursRepository{
 
 
 
-    public function modifierActeur(Acteurs  $acteurs){
-        $sql = 'UPDATE acteurs SET nom = :nom , prenom = :prenom , mdp = :mdp , cp = :cp , ville = : ville , rue = :rue WHERE id_Acteurs = :id_Acteurs';
+    public function modifierActeur(Acteurs $acteurs){
+        $sql = 'UPDATE acteurs SET nom = :nom , prenom = :prenom , mdp = :mdp , cp = :cp , ville = :ville , rue = :rue, role=:role, etat=:etat, tel=:tel, date_naissance=:date_naissance WHERE id_acteur = :id_acteur';
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':nom', $acteurs->getNom());
         $req->bindValue(':prenom', $acteurs->getPrenom());
         $req->bindValue(':mdp',  $acteurs->getMdp());
         $req->bindValue(':cp',  $acteurs->getCp());
-        $req->bindValue(':id_Acteur', $acteurs->getIdActeur());
-        return $req->execute();
+        $req->bindValue(':ville', $acteurs->getVille());
+        $req->bindValue(':rue', $acteurs->getRue());
+        $req->bindValue(':role', $acteurs->getRole());
+        $req->bindValue(':etat', $acteurs->getEtat());
+        $req->bindValue(':tel', $acteurs->getTelephone());
+        $req->bindValue(':date_naissance', $acteurs->getDateNaissance());
+        $req->bindValue(':id_acteur', $acteurs->getIdActeur());
+        $req->execute();
     }
     
     public function supprimerActeur(Acteurs $acteurs){
        
-        $sql = 'DELETE FROM acteurs WHERE id_Acteur = :id_Acteur';
+        $sql = 'DELETE FROM acteurs WHERE id_acteur = :id_Acteur';
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_Acteur', $acteurs->getIdActeur());
         $req->execute();
