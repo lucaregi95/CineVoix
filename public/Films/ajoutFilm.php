@@ -31,7 +31,7 @@ if(isset($film)){
             </div>
             <div class="mb-3">
                 <label>Duree :</label>
-                <input type="time" name="duree" required>
+                <input type="time" name="duree"  value="00:00" required>
             </div>
             <div class="mb-3">
                 <label>Affiche :</label>
@@ -58,6 +58,7 @@ if(isset($film)){
                 <input type="url" name="bande_annonce">
             </div>
             <button type="submit">Valider</button>
+            <button formaction="tabFilm.php">Retour</button>
         </div>
     </div>
 </form>

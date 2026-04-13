@@ -9,11 +9,11 @@ class FilmRepository
         $this->connexionBdd = (new Bdd())->getConnexionBdd();
     }
 
-    public function getFilm($film)
+    public function getFilm($id_film)
     {
         $sql = "SELECT * FROM film WHERE id_film = :idfilm";
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':idfilm', $film);
+        $req->bindValue(':idfilm', $id_film);
         $req->execute();
         $result = $req->fetch();
         $film = new Film($result["id_film"], $result["nom"], $result["description"], $result["duree"],$result["affiche"],$result["genre"],$result["age_min"],$result["realisateur"],$result["date_sortie"],$result["bande_annonce"]);
@@ -59,7 +59,7 @@ class FilmRepository
     }
 
     public function modifierFilm(Film $film){
-        $sql='UPDATE film SET nom = :nom , description = :description , duree = :duree , affiche = :affiche , genre = :genre , age_min = :age_min , realisateur = :realisateur , date_sortie = :date_sortie , bande_annonce = :bande_annonce WHERE id_film = :idfilm';
+        $sql='UPDATE film SET nom = :nom , description = :description , duree = :duree , affiche = :affiche , genre = :genre , age_min = :age_min , realisateur = :realisateur , date_sortie = :date_sortie , bande_annonce = :bande_annonce WHERE id_film = :id_film';
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_film', $film->getIdFilm());
         $req->bindValue(':nom', $film->getNom());

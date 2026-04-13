@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf4715fa-0228-4792-a0c5-2d70d639a770" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/crud.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Acteurs/connexionActeur.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/Acteurs/connexionActeur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Acteurs/connexionActeur2.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/Acteurs/connexionActeur2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Acteurs/tabActeur.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/Acteurs/tabActeur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/CodePromo/tabCodePromo.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/CodePromo/tabCodePromo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Films/tabFilm.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/Films/tabFilm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Salles/tabSalle.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/Salles/tabSalle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/ActeursRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/ActeursRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Films/ajoutFilm.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/Films/ajoutFilm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Films/modificationFilm.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/Films/modificationFilm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/FilmRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/FilmRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/traitement/newFilm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/traitement/newFilm.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +104,7 @@
       <workItem from="1775809760795" duration="956000" />
       <workItem from="1775811331204" duration="16826000" />
       <workItem from="1776024693353" duration="6845000" />
-      <workItem from="1776069842971" duration="2418000" />
+      <workItem from="1776069842971" duration="4820000" />
     </task>
     <servers />
   </component>
