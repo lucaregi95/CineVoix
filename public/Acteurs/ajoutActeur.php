@@ -34,7 +34,7 @@ if (isset($acteur)){
             </div>
             <div class="mb-3">
                 <label>Email :*</label>
-                <input name="email" id="email" type="text" required><br />
+                <input name="email" id="email" type="email" required><br />
             </div>
             <div class="mb-3">
                 <label>Mot de passe :*</label>
@@ -64,6 +64,5 @@ if (isset($acteur)){
         </div>
     </div>
 </form>
-</div>
 </body>
 </html>
