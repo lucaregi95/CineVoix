@@ -27,7 +27,6 @@ $tabSalle = $rep -> getAllSalle();
         <th>Capacite de la salle</th>
         <th>Etat</th>
         <th>Modifier</th>
-        <th>Supprimer</th>
     </tr>
     </thead>
 
