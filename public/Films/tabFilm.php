@@ -60,7 +60,7 @@ if($tabFilm!=0){
                 </form>
             </td>
             <td>
-                <form method="post" action="suppressionFlim.php">
+                <form method="post" action="suppressionFilm.php">
                     <button type="submit">Supprimer</button>
                     <input type="hidden" name="id" value="<?=$film->getIdFilm()?>">
                 </form>
@@ -72,7 +72,7 @@ if($tabFilm!=0){
 <?php }
 else{?>
     <h4>Aucun film pour le moment...</h4>
-    <form method="post" action="ajoutFlim.php">
+    <form method="post" action="ajoutFilm.php">
         <button type="submit">Cliquez ici pour en ajoutez un !</button>
     </form>
 <?php }?>
