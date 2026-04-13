@@ -13,11 +13,11 @@ if(isset($film)){
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Cinémoi - Accueil</title>
+    <title>Cinémoi - Ajout Film</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
 <body>
-<form action="ajoutFlim.php" method="post">
+<form action="ajoutFilm.php" method="post">
 
     <div class="row">
         <div class="col-md-6">
