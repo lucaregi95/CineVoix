@@ -12,7 +12,7 @@ class SeancesRepository
         $req->bindValue(':seances', $seances);
         $req->execute();
         $result = $req->fetch();
-        $seance = new Seances($result["id_seance"], $result["date_naissance"], $result["ref_film"], $result["ref_salle"]);
+        $seance = new Seances($result["id_seance"], $result["date_seance"], $result["ref_film"], $result["ref_salle"]);
         return $seance;
     }
 
@@ -23,14 +23,14 @@ class SeancesRepository
         $results = $req->fetchAll();
         $tabSeances = array();
         foreach($results as $result){
-            $seances = new Seances($result["id_seance"], $result["date_naissance"], $result["ref_film"], $result["ref_salle"]);
+            $seances = new Seances($result["id_seance"], $result["date_seance"], $result["ref_film"], $result["ref_salle"]);
             $tabSeances[] = $seances;
         }
         return $tabSeances;
     }
 
-    public function ajouterReservation(Seances $seance){
-        $sql = "INSERT INTO seances VALUES :id_seance, :date_seance, :ref_film, :ref_salle";
+    public function ajouterSeance(Seances $seance){
+        $sql = "INSERT INTO seances VALUES (:id_seance, :date_seance, :ref_film, :ref_salle)";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_seance', $seance->getIdSeance());
         $req->bindValue(':date_seance', $seance->getDateSeance());
@@ -39,7 +39,7 @@ class SeancesRepository
         $req->execute();
     }
 
-    public function modifierReservation(Seances $seance){
+    public function modifierSeance(Seances $seance){
         $sql ='UPDATE seances SET date_seance = :date_seance WHERE id_seance = :id_seance';
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':date_seance', $seance->getDateSeance());
@@ -48,7 +48,7 @@ class SeancesRepository
         return $req->execute();
     }
 
-    public function supprimerReservation(Seances $seance){
+    public function supprimerSeance(Seances $seance){
         $sql = 'DELETE FROM seances WHERE id_seance = :id_seance';
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_seance', $seance->getIdSeance());
