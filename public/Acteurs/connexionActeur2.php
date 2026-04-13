@@ -26,7 +26,9 @@ $result = $rep->connecterActeur($email, $mdp);
 if (!$result) {
     // Aucun utilisateur trouvé : redirection avec message d'erreur
     header("Location: connexionActeur.php?erreur=unknown");
-} else {
+} else if ($result['etat']==0){
+    header("Location: connexionActeur.php?erreur=bannir");
+}else{
 
     session_start();
     // Stockage des informations de l'utilisateur en session

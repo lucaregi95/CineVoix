@@ -49,5 +49,6 @@ $tabSalle = $rep -> getAllSalle();
     </tbody>
     <?php } ?>
 </table>
+<a href="../crud.php">Retour aux cruds</a>
 </body>
 </html>

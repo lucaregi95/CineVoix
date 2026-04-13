@@ -18,7 +18,7 @@ $tabFilm = $rep -> getAllFilm();
 
 <?php
 
-if($tabFilm!=0){
+if(!empty($tabFilm)){
 
 
     ?>
@@ -69,12 +69,14 @@ if($tabFilm!=0){
         </tbody>
         <?php } ?>
     </table>
+    <a href="../crud.php">Retour aux cruds</a>
 <?php }
 else{?>
     <h4>Aucun film pour le moment...</h4>
     <form method="post" action="ajoutFilm.php">
         <button type="submit">Cliquez ici pour en ajoutez un !</button>
     </form>
+    <a href="../crud.php">Retour aux cruds</a>
 <?php }?>
 
 </body>

@@ -12,7 +12,9 @@ $erreur=null;
 $inscription=null;
 if(isset($_GET['erreur'])){
     if ($_GET['erreur']=='unknown'){
-        $erreur="Identifiants inexistants ou incorrects";
+        $erreur="Identifiants inexistants ou incorrects.";
+    }if ($_GET['erreur']=='bannir'){
+        $erreur="Votre compte a été banni.";
     }
 
 }
