@@ -61,7 +61,7 @@ class FilmRepository
     public function modifierFilm(Film $film){
         $sql='UPDATE film SET nom = :nom , description = :description , duree = :duree , affiche = :affiche , genre = :genre , age_min = :age_min , realisateur = :realisateur , date_sortie = :date_sortie , bande_annonce = :bande_annonce WHERE id_film = :idfilm';
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':idfilm', $film->getIdFilm());
+        $req->bindValue(':id_film', $film->getIdFilm());
         $req->bindValue(':nom', $film->getNom());
         $req->bindValue(':description', $film->getDescription());
         $req->bindValue(':duree', $film->getDuree());
