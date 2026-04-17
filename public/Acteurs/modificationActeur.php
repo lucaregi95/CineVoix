@@ -55,15 +55,15 @@ $o=$cpr->getActeur($id_acteur);
             </div>
             <div class="mb-3">
                 <label>Telephone :</label>
-                <input name="tel" type="tel" value="<?php echo $o->getTelephone()?>" required>
+                <input name="tel" type="tel" value="<?php echo $o->getTelephone()?>" >
             </div>
             <div class="mb-3">
                 <label>Rue :</label>
-                <input name="rue" type="text" value="<?php echo $o->getRue()?>" required>
+                <input name="rue" type="text" value="<?php echo $o->getRue()?>" >
             </div>
             <div class="mb-3">
                 <label>Code Postal :</label>
-                <input name="cp" type="number" value="<?php echo $o->getCp()?>" required>
+                <input name="cp" type="number" value="<?php echo $o->getCp()?>" >
             </div>
             <div class="mb-3">
                 <label>Ville :</label>
@@ -71,7 +71,7 @@ $o=$cpr->getActeur($id_acteur);
             </div>
             <div class="mb-3">
                 <label>Date de naissance :</label>
-                <input name="date_naissance" type="date" value="<?php echo $o->getDateNaissance()?>" required>
+                <input name="date_naissance" type="date" value="<?php echo $o->getDateNaissance()?>" >
             </div>
 
             <div class="mb-3">
