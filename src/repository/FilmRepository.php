@@ -20,6 +20,20 @@ class FilmRepository
         return $film;
     }
 
+    public function getAllFilmTri(){
+        $sql = "SELECT * FROM Film WHERE date_sortie<=:date ORDER BY date_sortie ASC";
+        $req = $this->connexionBdd->prepare($sql);
+        $req->bindValue(':date', date('Y-m-d'));
+        $req->execute();
+        $results = $req->fetchAll();
+        $tabFilm = array();
+        foreach ($results as $result) {
+            $film = new Film($result["id_film"], $result["nom"], $result["description"], $result["duree"],$result["affiche"],$result["genre"],$result["age_min"],$result["realisateur"],$result["date_sortie"],$result["bande_annonce"]);
+            $tabFilm[] = $film;
+        }
+        return $tabFilm;
+    }
+
     public function getAllFilm()
     {
         $sql = "SELECT * FROM Film";

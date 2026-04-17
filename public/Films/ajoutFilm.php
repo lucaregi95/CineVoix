@@ -58,9 +58,12 @@ if(isset($film)){
                 <input type="url" name="bande_annonce">
             </div>
             <button type="submit">Valider</button>
-            <button formaction="tabFilm.php">Retour</button>
+
         </div>
     </div>
+</form>
+<form method="post" action="tabFilm.php">
+    <button type="submit">Retour</button>
 </form>
 </body>
 </html>

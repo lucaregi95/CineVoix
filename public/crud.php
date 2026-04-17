@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <style>
+    </style>
     <meta charset="UTF-8">
     <title>Cinémoi - Ajout Code Promo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -14,4 +16,14 @@
 <a href="Reservation/tabReservation.php">reservation</a>
 <a href="Salles/tabSalle.php">salle</a>
 <a href="Seances/tabSeance.php">seance</a>
+<a href="client/accueil.php">accueil</a>
+
+
+
+
+
+
+
+</body>
+</html>
 
