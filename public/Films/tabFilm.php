@@ -11,10 +11,17 @@ $tabFilm = $rep -> getAllFilm();
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Cinémoi - Liste Films</title>
+    <title>Cinémoi - Accueil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
 <body>
+
+
+
+
+
 
 <?php
 
@@ -70,6 +77,9 @@ if(!empty($tabFilm)){
         <?php } ?>
     </table>
     <a href="../crud.php">Retour aux cruds</a>
+    <form method="post" action="ajoutFilm.php">
+        <button type="submit">Cliquez ici pour en ajoutez un !</button>
+    </form>
 <?php }
 else{?>
     <h4>Aucun film pour le moment...</h4>
