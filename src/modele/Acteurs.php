@@ -41,8 +41,8 @@ class Acteurs {
         $this->rue = $rue;
         $this->ville = $ville;
         $this->cp = $cp;
-        $this->etat = $etat;
         $this->role = $role;
+        $this->etat = $etat;
 
         $date = new DateTimeImmutable();
         $date = $date->format('Y\-m\-d');
