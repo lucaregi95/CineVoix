@@ -87,16 +87,16 @@ $tabFilm = $rep -> getAllFilmTri();
 <body>
 <section class="allo">
 
-<nav class="navbar navbar-expand-sm navbar-light bg-light border border-danger border-3">
-    <div class="container d-flex justify-content-evenly align-items-center">
+    <nav class="navbar navbar-expand-sm navbar-dark  border-3" style="background-color: #0d1b4c;">
+        <div class="container d-flex justify-content-evenly align-items-center">
 
-        <a class="nav-link" href="specialistes.php">Spécialistes</a>
-        <a class="nav-link" href="forum.php">Forum</a>
-        <a class="nav-link" href="aides.php">Aides</a>
-        <a class="nav-link" href="presentation.php">Handicaps</a>
+            <a class="nav-link text-white" href="accueil.php">Accueil</a>
+            <a class="nav-link text-white" href="forum.php">Réservation</a>
+            <a class="nav-link text-white" href="aides.php">Mes réservations</a>
+            <a class="nav-link text-white" href="profil.php">Profil</a>
 
-    </div>
-</nav>
+        </div>
+    </nav>
 <div class="section">
     <div class="header">
         <h2>Films au cinéma</h2>

@@ -46,7 +46,7 @@ class ReservationRepository
     public function supprimerReservation(Reservation $reservation){
         $sql = "DELETE FROM reservation WHERE id_reservation = :id_reservation";
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':idreservation', $reservation->getIdReservation() );
+        $req->bindValue(':id_reservation', $reservation->getIdReservation() );
         $req->execute();
     }
 
@@ -65,6 +65,33 @@ class ReservationRepository
         return $req->execute();
     }
 
+    public function getReservationsByActeur($id_acteur) {
+        $sql = "SELECT * FROM reservation WHERE ref_acteur = :id_acteur ORDER BY id_reservation DESC";
+
+        $req = $this->connexionBdd->prepare($sql);
+        $req->bindValue(':id_acteur', $id_acteur);
+        $req->execute();
+
+        $results = $req->fetchAll();
+
+        $tabReservations = [];
+
+        foreach ($results as $result) {
+            $tabReservations[] = new Reservation(
+                $result["id_reservation"],
+                $result["statut"],
+                $result["qte_plein_tarif"],
+                $result["qte_etudiant"],
+                $result["qte_senior"],
+                $result["moyen_paiement"],
+                $result["ref_seance"],
+                $result["ref_code"],
+                $result["ref_acteur"]
+            );
+        }
+
+        return $tabReservations;
+    }
 
 
 

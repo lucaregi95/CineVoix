@@ -8,147 +8,292 @@ require_once "../../src/repository/ActeursRepository.php";
 
 $rep = new ActeursRepository();
 //$id_acteur = $_SESSION['id'];
-$id_acteur = 1 ;
+$id_acteur = 1;
+
+$erreur = null;
 
 if (isset($_POST['nom'])) {
     $acteurActuel = $rep->getActeur($id_acteur);
 
-    $mdp = !empty($_POST['mdp']) ? $_POST['mdp'] : $acteurActuel->getMdp();
+    if (!empty($_POST['mdp']) || !empty($_POST['mdp_confirm'])) {
 
-    $acteur = new Acteurs(
-        $id_acteur,
-        $_POST['nom'],
-        $_POST['prenom'],
-        $_POST['email'],
-        $mdp,
-        $_POST['date_naissance'],
-        $_POST['tel'],
-        $_POST['rue'],
-        $_POST['ville'],
-        $_POST['cp'],
-        $acteurActuel->getRole(),
-        $acteurActuel->getEtat()
-    );
+        if ($_POST['mdp'] !== $_POST['mdp_confirm']) {
+            $erreur = "Les mots de passe ne correspondent pas.";
+        }
 
-    $rep->modifierActeur($acteur);
-    header("Location: profil.php?id=" . $id_acteur . "&success=1");
-    exit();
+        elseif (strlen($_POST['mdp']) < 12) {
+            $erreur = "Le mot de passe doit contenir au moins 12 caractères.";
+        }
+
+        else {
+            $mdp = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
+        }
+
+    } else {
+        $mdp = $acteurActuel->getMdp();
+    }
+
+    if (!$erreur) {
+        $acteur = new Acteurs(
+                $id_acteur,
+                $_POST['nom'],
+                $_POST['prenom'],
+                $_POST['email'],
+                $mdp,
+                $_POST['date_naissance'],
+                $_POST['tel'],
+                $_POST['rue'],
+                $_POST['ville'],
+                $_POST['cp'],
+                $acteurActuel->getRole(),
+                $acteurActuel->getEtat()
+        );
+
+        $rep->modifierActeur($acteur);
+
+        header("Location: profil.php?id=" . $id_acteur . "&success=1");
+        exit();
+    }
 }
 
-$o = $rep->getActeur($id_acteur);
+$modif = $rep->getActeur($id_acteur);
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Mon profil</title>
+    <title>Mon profil – Cinémoi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --main-blue: #0d1b4c;
+            --main-blue-light: #1d3b8b;
+            --main-blue-bg: #eef2fb;
+        }
+
+        body {
+            background-color: #f5f7fc;
+            font-family: 'Candara', sans-serif;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: var(--main-blue) !important;
+            border-bottom: 3px solid var(--main-blue-light);
+        }
+
+        .navbar .nav-link {
+            color: white !important;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .navbar .nav-link:hover {
+            color: #d6e4ff !important;
+        }
+
+        /* CARD */
+        .card {
+            border: 2px solid var(--main-blue);
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(13, 27, 76, 0.12);
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        /* SECTION TITLES */
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--main-blue);
+            margin-bottom: 1rem;
+            letter-spacing: 0.08em;
+        }
+
+        /* INPUTS */
+        .form-control {
+            border-radius: 10px;
+            padding: 0.7rem 0.9rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--main-blue-light);
+            box-shadow: 0 0 0 0.2rem rgba(29, 59, 139, 0.15);
+        }
+
+        /* BUTTONS */
+        .btn-cinema {
+            background-color: var(--main-blue);
+            border-color: var(--main-blue);
+            color: white;
+            border-radius: 10px;
+            padding: 0.65rem 1.3rem;
+        }
+
+        .btn-cinema:hover {
+            background-color: var(--main-blue-light);
+            border-color: var(--main-blue-light);
+        }
+
+        .btn-outline-cinema {
+            border: 2px solid var(--main-blue);
+            color: var(--main-blue);
+            border-radius: 10px;
+            padding: 0.65rem 1.3rem;
+        }
+
+        .btn-outline-cinema:hover {
+            background-color: var(--main-blue);
+            color: white;
+        }
+
+        /* HEADER PROFIL */
+        .profil-header {
+            background: linear-gradient(135deg, #0d1b4c, #1d3b8b);
+            color: white;
+            border-radius: 12px 12px 0 0;
+            padding: 1.5rem;
+        }
+
+        .profil-header .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border: 2px solid rgba(255,255,255,0.35);
+        }
+
+        hr {
+            border-color: #dbe3f7;
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
 
-<nav class="navbar navbar-expand-sm navbar-light bg-light border border-danger border-3">
+<nav class="navbar navbar-expand-sm">
     <div class="container d-flex justify-content-evenly align-items-center">
-
-        <a class="nav-link" href="specialistes.php">Spécialistes</a>
-        <a class="nav-link" href="forum.php">Forum</a>
-        <a class="nav-link" href="aides.php">Aides</a>
-        <a class="nav-link" href="presentation.php">Handicaps</a>
-
+        <a class="nav-link" href="accueil.php">Accueil</a>
+        <a class="nav-link" href="forum.php">Réservation</a>
+        <a class="nav-link" href="reservationClient.php">Mes réservations</a>
+        <a class="nav-link" href="profil.php">Profil</a>
     </div>
 </nav>
 
-
-<div class="container py-5" style="max-width: 700px;">
-    <h4 class="mb-4">Mon profil</h4>
+<div class="container py-5" style="max-width: 680px;">
 
     <?php if (isset($_GET['success'])): ?>
-        <div class="alert alert-success alert-dismissible fade show">
-            Modifications enregistrées avec succès.
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <strong>✓</strong> Modifications enregistrées avec succès.
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     <?php endif; ?>
 
-    <div class="card shadow-sm">
+    <?php if ($erreur): ?>
+        <div class="alert alert-danger shadow-sm">
+            <strong>✕</strong> <?= htmlspecialchars($erreur) ?>
+        </div>
+    <?php endif; ?>
+
+    <div class="card">
+
+        <!-- Header avec avatar -->
+        <div class="profil-header d-flex align-items-center gap-3">
+            <div class="avatar">
+                <?= strtoupper(substr($modif->getPrenom(), 0, 1) . substr($modif->getNom(), 0, 1)) ?>
+            </div>
+            <div>
+                <p class="profil-name"><?= htmlspecialchars($modif->getPrenom() . ' ' . $modif->getNom()) ?></p>
+                <p class="profil-role"><?= htmlspecialchars(ucfirst($modif->getRole())) ?></p>
+            </div>
+        </div>
+
         <div class="card-body">
             <form action="profil.php" method="POST">
-                <h6 class="text-muted mb-3">Informations personnelles</h6>
-                <div class="row g-3 mb-3">
+
+                <p class="section-title">Informations personnelles</p>
+                <div class="row g-3 mb-1">
                     <div class="col-md-6">
                         <label class="form-label">Nom</label>
-                        <input type="text" name="nom" class="form-control" value="<?= htmlspecialchars($o->getNom()) ?>" required>
+                        <input type="text" name="nom" class="form-control" value="<?= htmlspecialchars($modif->getNom()) ?>" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Prénom</label>
-                        <input type="text" name="prenom" class="form-control" value="<?= htmlspecialchars($o->getPrenom()) ?>" required>
+                        <input type="text" name="prenom" class="form-control" value="<?= htmlspecialchars($modif->getPrenom()) ?>" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($o->getEmail()) ?>" required>
+                        <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($modif->getEmail()) ?>" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Téléphone</label>
-                        <input type="tel" name="tel" class="form-control" value="<?= htmlspecialchars($o->getTelephone()) ?>">
+                        <input type="tel" name="tel" class="form-control" value="<?= htmlspecialchars($modif->getTelephone()) ?>">
                     </div>
                 </div>
 
                 <hr>
 
-                <h6 class="text-muted mb-3">Adresse</h6>
-                <div class="row g-3 mb-3">
+                <p class="section-title">Adresse</p>
+                <div class="row g-3 mb-1">
                     <div class="col-12">
                         <label class="form-label">Rue</label>
-                        <input type="text" name="rue" class="form-control" value="<?= htmlspecialchars($o->getRue()) ?>">
+                        <input type="text" name="rue" class="form-control" value="<?= htmlspecialchars($modif->getRue()) ?>">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Code postal</label>
-                        <input type="text" name="cp" class="form-control" value="<?= htmlspecialchars($o->getCp()) ?>" maxlength="6">
+                        <input type="text" name="cp" class="form-control" value="<?= htmlspecialchars($modif->getCp()) ?>" maxlength="6">
                     </div>
                     <div class="col-md-8">
                         <label class="form-label">Ville</label>
-                        <input type="text" name="ville" class="form-control" value="<?= htmlspecialchars($o->getVille()) ?>" required>
+                        <input type="text" name="ville" class="form-control" value="<?= htmlspecialchars($modif->getVille()) ?>" required>
                     </div>
                 </div>
 
                 <hr>
 
-                <h6 class="text-muted mb-3">Compte</h6>
-                <div class="row g-3 mb-3">
+                <p class="section-title">Compte</p>
+                <div class="row g-3 mb-1">
                     <div class="col-md-6">
                         <label class="form-label">Date de naissance</label>
-                        <input type="date" name="date_naissance" class="form-control" value="<?= htmlspecialchars($o->getDateNaissance()) ?>">
+                        <input type="date" name="date_naissance" class="form-control" value="<?= htmlspecialchars($modif->getDateNaissance()) ?>">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Rôle</label>
-                        <input type="text" class="form-control" value="<?= htmlspecialchars($o->getRole()) ?>" disabled>
+                        <input type="text" class="form-control" value="<?= htmlspecialchars(ucfirst($modif->getRole())) ?>" disabled>
                         <div class="form-text">Non modifiable</div>
                     </div>
                 </div>
 
                 <hr>
 
-                <h6 class="text-muted mb-3">
+                <p class="section-title">
                     Mot de passe
-                    <span class="fw-normal text-muted">(laisser vide pour ne pas modifier)</span>
-                </h6>
-                <div class="row g-3 mb-4">
+                    <span class="text-muted fw-normal text-lowercase" style="font-size:0.75rem; letter-spacing:0;">— laisser vide pour ne pas modifier</span>
+                </p>
+                <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Nouveau mot de passe</label>
-                        <input type="password" name="mdp" id="mdp1" class="form-control" placeholder="••••••••">
+                        <input type="password" name="mdp" class="form-control" placeholder="••••••••">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Confirmer</label>
-                        <input type="password" name="mdp_confirm" id="mdp2" class="form-control" placeholder="••••••••">
-                    </div>
-                    <div class="col-12">
-                        <div id="pw-error" class="text-danger small" style="display:none;"></div>
+                        <input type="password" name="mdp_confirm" class="form-control" placeholder="••••••••">
                     </div>
                 </div>
 
-                <div class="d-flex gap-2 justify-content-end">
-                    <a href="accueil.php" class="btn btn-outline-secondary">Retour</a>
-                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                <div class="d-flex gap-2 justify-content-end pt-2">
+                    <a href="accueil.php" class="btn btn-outline-cinema">Retour</a>
+                    <button type="submit" class="btn btn-cinema">Enregistrer</button>
                 </div>
 
             </form>
@@ -157,27 +302,5 @@ $o = $rep->getActeur($id_acteur);
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    document.querySelector('form').addEventListener('submit', function(e) {
-        const mdp1 = document.getElementById('mdp1').value;
-        const mdp2 = document.getElementById('mdp2').value;
-        const err  = document.getElementById('pw-error');
-        if (mdp1 || mdp2) {
-            if (mdp1 !== mdp2) {
-                e.preventDefault();
-                err.textContent = 'Les mots de passe ne correspondent pas.';
-                err.style.display = 'block';
-                return;
-            }
-            if (mdp1.length < 6) {
-                e.preventDefault();
-                err.textContent = 'Le mot de passe doit contenir au moins 6 caractères.';
-                err.style.display = 'block';
-                return;
-            }
-        }
-        err.style.display = 'none';
-    });
-</script>
 </body>
 </html>
