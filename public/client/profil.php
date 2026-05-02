@@ -6,9 +6,13 @@ require_once "../../src/bdd/Bdd.php";
 require_once "../../src/modele/Acteurs.php";
 require_once "../../src/repository/ActeursRepository.php";
 
+if (!isset($_SESSION['id'])) {
+    header("Location: ../Acteurs/connexionActeur.php");
+    exit();
+}
+
 $rep = new ActeursRepository();
-//$id_acteur = $_SESSION['id'];
-$id_acteur = 1;
+$id_acteur = $_SESSION['id'];
 
 $erreur = null;
 
@@ -293,6 +297,7 @@ $modif = $rep->getActeur($id_acteur);
 
                 <div class="d-flex gap-2 justify-content-end pt-2">
                     <a href="accueil.php" class="btn btn-outline-cinema">Retour</a>
+                    <a href="../Acteurs/deconnexionActeur.php" class="btn btn-cinema">Déconnexion</a>
                     <button type="submit" class="btn btn-cinema">Enregistrer</button>
                 </div>
 
