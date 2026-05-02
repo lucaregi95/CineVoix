@@ -1,18 +1,16 @@
-
 <?php
 require_once "../../src/traitement/newFilm.php";
 require_once "../../src/repository/FilmRepository.php";
 require_once "../../src/modele/Film.php";
 $rep = new FilmRepository();
-$tabFilm = $rep -> getAllFilmTri();
-
+$tabFilm = $rep->getAllFilm();
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Cinémoi - Liste Films</title>
+    <title>Cinémoi - Accueil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -20,127 +18,67 @@ $tabFilm = $rep -> getAllFilmTri();
             background: #0b0b0b;
             font-family: Arial, sans-serif;
             color: white;
+            min-height: 100vh;
         }
-
-        .section {
-            padding: 20px;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header a {
-            color: #ccc;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .film-list {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding-top: 15px;
-        }
-
-        .film {
-            min-width: 150px;
-            position: relative;
-        }
-
-        .film img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .film p {
-            margin-top: 8px;
-            font-size: 14px;
-        }
-
-        /* Badge "Nouveau" */
-        .badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: red;
-            padding: 3px 6px;
-            font-size: 12px;
-            border-radius: 4px;
-        }
-        .film img {
-            transition: transform 3s;
-        }
-
-        .film:hover img {
-            transform: scale(1.05);
-        }
+        .section { padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; }
+        .header a { color: #ccc; text-decoration: none; font-size: 14px; }
+        .film-list { display: flex; gap: 15px; overflow-x: auto; padding-top: 15px; padding-bottom: 10px; }
+        .film { min-width: 150px; position: relative; flex-shrink: 0; }
+        .film p { margin-top: 8px; font-size: 14px; }
         .film img {
             width: 150px;
             height: 220px;
-            object-fit: cover; /* coupe proprement l'image */
+            object-fit: cover;
             border-radius: 10px;
-        }</style>
+            transition: transform 0.3s;
+            display: block;
+        }
+        .film:hover img { transform: scale(1.05); }
+    </style>
 </head>
 <body>
 <section class="allo">
 
-    <nav class="navbar navbar-expand-sm navbar-dark  border-3" style="background-color: #0d1b4c;">
+    <nav class="navbar navbar-expand-sm navbar-dark border-3" style="background-color: #0d1b4c;">
         <div class="container d-flex justify-content-evenly align-items-center">
-
             <a class="nav-link text-white" href="accueil.php">Accueil</a>
-            <a class="nav-link text-white" href="forum.php">Réservation</a>
-            <a class="nav-link text-white" href="aides.php">Mes réservations</a>
+            <a class="nav-link text-white" href="">Réservation</a>
+            <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
             <a class="nav-link text-white" href="profil.php">Profil</a>
-
         </div>
     </nav>
-<div class="section">
-    <div class="header">
-        <h2>Films au cinéma</h2>
-        <a href="#">Tous les films actuellement au cinéma ></a>
+
+    <div class="section">
+        <div class="header">
+            <h2>Films au cinéma</h2>
+            <a href="#">Tous les films actuellement au cinéma ></a>
+        </div>
+
+        <div class="film-list">
+            <?php if (!empty($tabFilm)) { ?>
+                <?php foreach ($tabFilm as $film) { ?>
+                    <div class="film">
+                        <?php
+                        $affiche = $film->getAffiche();
+                        if ($affiche != null && $affiche != "") {
+                            ?>
+                            <img src="<?= $affiche ?>" alt="<?= $film->getNom() ?>">
+                        <?php } else { ?>
+                            <img src="https://via.placeholder.com/150x220?text=No+Image" alt="<?= $film->getNom() ?>">
+                        <?php } ?>
+                        <p><?= $film->getNom() ?></p>
+                        <a href="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>" class="btn btn-sm btn-outline-light">Info</a>
+                    </div>
+                <?php } ?>
+            <?php } else { ?>
+                <p>Aucun film pour le moment...</p>
+            <?php } ?>
+        </div>
     </div>
 
-    <div class="film-list">
+    <a href="../crud.php" style="color:#ccc; margin: 0 20px;">Retour aux cruds</a>
 
-        <div class="film">
-            <img src="https://image.tmdb.org/t/p/original/dQFwdkCpfc5UOdQigYKQm06VJS4.jpg" alt="Mario" style="">
-            <p>Super Mario Galaxy, Le Film</p>
-        </div>
-
-        <div class="film">
-            <img src="illusion.jpg" alt="">
-            <span class="badge">Nouveau</span>
-            <p>Juste une illusion</p>
-        </div>
-
-        <div class="film">
-            <img src="drama.jpg" alt="">
-            <p>The Drama</p>
-        </div>
-
-        <div class="film">
-            <img src="cocorico.jpg" alt="">
-            <p>Cocorico 2</p>
-        </div>
-
-    </div>
-</div>
-<?php
-
-if(!empty($tabFilm)){
-
-
-    ?>
-
-    <a href="../crud.php">Retour aux cruds</a>
-<?php }
-else{?>
-    <h4>Aucun film pour le moment...</h4>
-    <a href="../crud.php">Retour aux cruds</a>
-<?php }?>
 </section>
 </body>
 </html>
