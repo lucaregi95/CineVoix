@@ -44,7 +44,7 @@ if (!$result) {
     $_SESSION['role']   = $result["role"];
     $_SESSION['date_creation']   = $result["date_creation"];
 
-    header('Location: tabActeur.php');
+    header('Location: ../client/accueil.php');
 
 
 
