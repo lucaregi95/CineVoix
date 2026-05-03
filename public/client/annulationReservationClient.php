@@ -23,13 +23,11 @@ $id = $_GET['id'];
 $repRes = new ReservationRepository();
 $reservation = $repRes->getReservation($id);
 
-// Vérifier que la réservation appartient bien au client connecté
 if ($reservation->getRefActeur() != $_SESSION['id']) {
     header("Location: reservationClient.php");
     exit();
 }
 
-// Vérifier que la séance n'est pas aujourd'hui ou passée
 $repSeance = new SeancesRepository();
 $seance = $repSeance->getSeances($reservation->getRefSeance());
 $dateSeance = new DateTime($seance->getDateSeance());
