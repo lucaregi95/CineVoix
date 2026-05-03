@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "../../src/traitement/newFilm.php";
 require_once "../../src/repository/FilmRepository.php";
 require_once "../../src/modele/Film.php";
@@ -42,6 +43,9 @@ $tabFilm = $rep->getAllFilm();
 
     <nav class="navbar navbar-expand-sm navbar-dark border-3" style="background-color: #0d1b4c;">
         <div class="container d-flex justify-content-evenly align-items-center">
+            <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'accueil' || $_SESSION['role'] == 'admin')) { ?>
+                <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
+            <?php } ?>
             <a class="nav-link text-white" href="accueil.php">Accueil</a>
             <a class="nav-link text-white" href="">Réservation</a>
             <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>

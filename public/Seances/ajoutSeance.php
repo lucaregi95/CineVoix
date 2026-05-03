@@ -34,6 +34,12 @@ $films = $rep2 -> getAllFilm();
 
 $rep3 = new SalleRepository();
 $salles = $rep3 -> getAllSalle();
+$sallesActives = array();
+foreach($salles as $salle){
+    if($salle -> getEtat() == "1"){
+        $sallesActives[] = $salle;
+    }
+}
 
 
 $date = new DateTimeImmutable();
