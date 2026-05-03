@@ -76,6 +76,10 @@ $repFilm = new FilmRepository();
                 $seance = $repSeance->getSeances($reservation->getRefSeance());
                 $film = $repFilm->getFilm($seance->getRefFilm());
                 $affiche = $film->getAffiche();
+                $dateSeance = new DateTime($seance ->getDateSeance());
+                $dateAujourdhui = new DateTime();
+                $dateAujourdhui->setTime(0, 0, 0);
+                $peutModifier = $dateSeance > $dateAujourdhui;
 
                 $statut = $reservation->getStatut();
                 if ($statut == "en attente") {
@@ -88,6 +92,13 @@ $repFilm = new FilmRepository();
                 ?>
                 <div class="col-md-6">
                     <div class="card shadow-sm">
+                        <?php if ($peutModifier) { ?>
+                            <hr style="border-color:#333; ">
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="../Reservation/modificationReservation.php?id=<$reservation->getIdReservation() ?>" class="btn btn-sm btn-outline-light">Modifier</a>
+                                <a href="../Reservation/suppressionReservation.php?id=<?= $reservation->getIdReservation() ?>" class="btn btn-sm btn-outline-danger">Annuler</a>
+                            </div>
+                        <?php } ?>
                         <div class="card-body">
 
                             <div class="d-flex gap-3 align-items-start">
