@@ -10,6 +10,8 @@ require_once "../../src/modele/Reservation.php";
 require_once "../../src/repository/ReservationRepository.php";
 require_once "../../src/modele/CodePromo.php";
 require_once "../../src/repository/CodePromoRepository.php";
+require_once "../../src/modele/Salle.php";
+require_once "../../src/repository/SalleRepository.php";
 
 if (!isset($_SESSION['id'])) {
     header("Location: ../Acteurs/connexionActeur.php");
@@ -65,6 +67,25 @@ if (isset($_POST['ref_seance'])) {
             }
             if ($ref_code == null) {
                 $erreur = "Code promo invalide ou inactif.";
+            }
+        }
+
+        if ($erreur == null) {
+            $repRes = new ReservationRepository();
+            $dejaReserve = $repRes->getReservationByActeurAndSeance($id_acteur, $_POST['ref_seance']);
+            if ($dejaReserve) {
+                $erreur = "Vous avez déjà une réservation pour cette séance.";
+            }
+        }
+
+        if ($erreur == null){
+            $seanceChoisie = $repSeance->getSeances($_POST['ref_seance']);
+            $repSalle = new SalleRepository();
+            $salle = $repSalle->getSalle($seanceChoisie->getRefSalle());
+            $placesDejaReservees = $repRes->getNombrePlacesReservees($_POST['ref_seance']);
+            $placesRestantes = $salle->getCapacite() - $placesDejaReservees;
+            if ($qte_plein + $qte_etu + $qte_senior > $placesRestantes) {
+                $erreur= "Plus assez de places disponibles. Il reste " . $placesRestantes . " places disponibles.";
             }
         }
 
