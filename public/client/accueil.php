@@ -136,9 +136,10 @@ $tabFilm = $rep->getAllFilmTri();
 
     <nav class="navbar navbar-expand-sm navbar-dark border-3" style="background-color: #0d1b4c;">
         <div class="container d-flex justify-content-evenly align-items-center">
-            <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'accueil' || $_SESSION['role'] == 'admin')) { ?>
+
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'accueil'): ?>
                 <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
-            <?php } ?>
+            <?php endif; ?>
 
             <a class="nav-link text-white" href="accueil.php">Accueil</a>
 
@@ -158,9 +159,11 @@ $tabFilm = $rep->getAllFilmTri();
                     Connexion
                 </button>
             <?php endif; ?>
+
         </div>
     </nav>
 
+    <!-- MODALE MON COMPTE (visiteurs non connectés) -->
     <div class="modal fade" id="modalCompte" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content rounded-4 border-0 p-2">
@@ -172,11 +175,11 @@ $tabFilm = $rep->getAllFilmTri();
 
                 <div class="modal-body px-4 pb-4">
                     <a href="../Acteurs/connexionActeur.php" class="btn w-100 fw-semibold py-3 mb-2"
-                       style="background:#0d1b4c; color:#cccccc; border-radius:12px;">
+                       style="background:#0d1b4c; color:white; border-radius:12px;">
                         Me connecter
                     </a>
-                    <a href="../Acteurs/inscriptionActeur.php" class="btn btn-outline-secondary w-100 py-3"
-                       style="border-radius:12px; color: black ">
+                    <a href="../Acteurs/ajoutActeur.php" class="btn btn-outline-secondary w-100 py-3"
+                       style="border-radius:12px;">
                         Créer mon compte
                     </a>
                 </div>
