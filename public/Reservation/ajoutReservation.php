@@ -45,9 +45,9 @@ $succes = null;
 
 if (isset($_POST['ref_seance'])) {
 
-    $qte_plein  = (int) $_POST['qte_plein_tarif'];
-    $qte_etu    = (int) $_POST['qte_etudiant'];
-    $qte_senior = (int) $_POST['qte_senior'];
+    $qte_plein  =  $_POST['qte_plein_tarif'];
+    $qte_etu    =  $_POST['qte_etudiant'];
+    $qte_senior =  $_POST['qte_senior'];
 
     if ($qte_plein + $qte_etu + $qte_senior == 0) {
         $erreur = "Veuillez sélectionner au moins une place.";
