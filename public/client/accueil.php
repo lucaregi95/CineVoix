@@ -36,6 +36,11 @@ $tabFilm = $rep->getAllFilm();
             display: block;
         }
         .film:hover img { transform: scale(1.05); }
+
+        .modal-title {
+            margin-bottom: 0;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -47,22 +52,51 @@ $tabFilm = $rep->getAllFilm();
                 <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
             <?php } ?>
             <a class="nav-link text-white" href="accueil.php">Accueil</a>
-            <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
-            <a class="nav-link text-white" href="profil.php">Profil</a>
+
             <?php if(isset($_SESSION["id"])): ?>
+                <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
+                <a class="nav-link text-white" href="profil.php">Profil</a>
                 <form action="../Acteurs/deconnexionActeur.php">
-                    <button type="submit" class="nav-link text-white">Déconnexion</button>
+                    <button type="submit" class="nav-link text-white border-0 bg-transparent">Déconnexion</button>
                 </form>
+            <?php else: ?>
+                <button type="button" class="nav-link text-white border-0 bg-transparent"
+                        data-bs-toggle="modal" data-bs-target="#modalCompte">
+                    Mes réservations
+                </button>
+                <button type="button" class="nav-link text-white border-0 bg-transparent"
+                        data-bs-toggle="modal" data-bs-target="#modalCompte">
+                    Connexion
+                </button>
             <?php endif; ?>
-
-            <?php if(!isset($_SESSION["id"])): ?>
-                <form action="../Acteurs/connexionActeur2.php">
-                    <button type="submit" class="nav-link text-white">Connexion</button>
-                </form>
-            <?php endif; ?>
-
         </div>
     </nav>
+
+
+    <div class="modal fade" id="modalCompte" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 p-2">
+
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title w-100 text-center fw-semibold">Mon compte</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body px-4 pb-4">
+                    <a href="../Acteurs/connexionActeur.php" class="btn w-100 fw-semibold py-3 mb-2"
+                       style="background:#0d1b4c; color:#cccccc; border-radius:12px;">
+                        Me connecter
+                    </a>
+                    <a href="../Acteurs/ajoutActeur.php" class="btn btn-outline-secondary w-100 py-3"
+                       style="border-radius:12px; color:black ">
+                        Créer mon compte
+                    </a>
+                    <hr class="my-3">
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <div class="section">
         <div class="header">
@@ -85,11 +119,11 @@ $tabFilm = $rep->getAllFilm();
                             </form>
 
                         <?php } else { ?>
-                                <form method="POST" action="../Films/ficheFilm.php?id=<?=$film->getIdFilm()?>">
+                            <form method="POST" action="../Films/ficheFilm.php?id=<?=$film->getIdFilm()?>">
                                 <button class="btn btn-dark" type="submit">
                                     <img src="../../img/default.png" alt="<?= $film->getNom() ?>">
                                 </button>
-                                    </form>
+                            </form>
                         <?php } ?>
                         <p><?= $film->getNom() ?></p>
                         <a href="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>" class="btn btn-sm btn-outline-light">Info</a>
@@ -104,5 +138,6 @@ $tabFilm = $rep->getAllFilm();
     <a href="../crud.php" style="color:#ccc; margin: 0 20px;">Retour aux cruds</a>
 
 </section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
