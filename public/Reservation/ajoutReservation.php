@@ -13,18 +13,9 @@ require_once "../../src/repository/CodePromoRepository.php";
 require_once "../../src/modele/Salle.php";
 require_once "../../src/repository/SalleRepository.php";
 
-<<<<<<< HEAD
-$ref_seance = $_POST['idSeance'];
-$ref_acteur = $_POST['idSeance'];
 
-if(isset($reservation)){
-    $rep = new ReservationRepository();
-    $rep-> ajouterReservation($reservation);
-    header('Location: ajoutReservation '.$_SERVER['PHP_SELF']);
-=======
 if (!isset($_SESSION['id'])) {
     header("Location: ../Acteurs/connexionActeur.php");
->>>>>>> 4d4e4113cf3499f368ee3c88b15969c6ac6bfe53
     exit();
 }
 
@@ -155,7 +146,16 @@ if (isset($_POST['ref_seance'])) {
     </style>
 </head>
 <body>
-
+<nav class="navbar navbar-expand-sm navbar-dark border-3" style="background-color: #0d1b4c;">
+    <div class="container d-flex justify-content-evenly align-items-center">
+        <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'accueil' || $_SESSION['role'] == 'admin')) { ?>
+            <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
+        <?php } ?>
+        <a class="nav-link text-white" href="../client/accueil.php">Accueil</a>
+        <a class="nav-link text-white" href="../client/reservationClient.php">Mes réservations</a>
+        <a class="nav-link text-white" href="../client/profil.php">Profil</a>
+    </div>
+</nav>
 <div class="container-resa">
 
     <div class="film-header">
@@ -171,9 +171,7 @@ if (isset($_POST['ref_seance'])) {
         </div>
     </div>
 
-<<<<<<< HEAD
-    <label> </label>
-=======
+
     <?php if ($succes != null) { ?>
         <div class="alert alert-success"><?= $succes ?></div>
         <div class="mt-3 text-center">
@@ -217,7 +215,7 @@ if (isset($_POST['ref_seance'])) {
                     <label class="form-label">Places senior</label>
                     <input type="number" name="qte_senior" class="form-control" min="0" value="0">
                 </div>
-
+                <!--
                 <div class="mb-3">
                     <label class="form-label">Moyen de paiement</label>
                     <select name="moyen_paiement" class="form-select" required>
@@ -227,7 +225,7 @@ if (isset($_POST['ref_seance'])) {
                         <option value="cheque">Chèque</option>
                     </select>
                 </div>
-
+                !-->
                 <div class="mb-3">
                     <label class="form-label">Code promo (facultatif)</label>
                     <input type="text" name="code_promo" class="form-control" placeholder="Ex : PROMO10">
@@ -245,7 +243,7 @@ if (isset($_POST['ref_seance'])) {
     <?php } ?>
 
 </div>
->>>>>>> 4d4e4113cf3499f368ee3c88b15969c6ac6bfe53
+
 
 </body>
 </html>
