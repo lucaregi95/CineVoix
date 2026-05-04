@@ -36,7 +36,7 @@ $film = $rep->getFilm($id);
     <?php if ($film->getAffiche()): ?>
         <img src="<?= htmlspecialchars($film->getAffiche()) ?>" alt="<?= htmlspecialchars($film->getNom()) ?>">
     <?php else: ?>
-        <img src="https://via.placeholder.com/220x320?text=No+Image" alt="Pas d'affiche">
+        <img src="../../img/default.png" alt="<?= $film->getNom() ?>">
     <?php endif; ?>
 
     <div class="infos">

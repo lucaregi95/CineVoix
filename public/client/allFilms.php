@@ -47,9 +47,20 @@ $tabFilm = $rep->getAllFilm();
                 <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
             <?php } ?>
             <a class="nav-link text-white" href="accueil.php">Accueil</a>
-            <a class="nav-link text-white" href="">Réservation</a>
             <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
             <a class="nav-link text-white" href="profil.php">Profil</a>
+            <?php if(isset($_SESSION["id"])): ?>
+                <form action="../Acteurs/deconnexionActeur.php">
+                    <button type="submit" class="nav-link text-white">Déconnexion</button>
+                </form>
+            <?php endif; ?>
+
+            <?php if(!isset($_SESSION["id"])): ?>
+                <form action="../Acteurs/connexionActeur2.php">
+                    <button type="submit" class="nav-link text-white">Connexion</button>
+                </form>
+            <?php endif; ?>
+
         </div>
     </nav>
 

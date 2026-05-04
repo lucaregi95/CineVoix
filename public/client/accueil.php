@@ -36,6 +36,57 @@ $tabFilm = $rep->getAllFilm();
             display: block;
         }
         .film:hover img { transform: scale(1.05); }
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.55);
+        }
+        .hero-content {
+            position: absolute;
+            bottom: 60px;
+            left: 50px;
+            z-index: 2;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            margin-bottom: 10px;
+        }
+        .hero-content p {
+            font-size: 1.1rem;
+            color: #ddd;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+        .hero-badge {
+            position: absolute;
+            top: 30px;
+            left: 50px;
+            background: #e50914;
+            color: white;
+            font-weight: bold;
+            font-size: 0.85rem;
+            padding: 5px 14px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .hero-gradient {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 60%;
+            background: linear-gradient(to top, #0b0b0b, transparent);
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -64,10 +115,33 @@ $tabFilm = $rep->getAllFilm();
         </div>
     </nav>
 
+    <?php
+    $filmVogue = $rep->getFilmEnVogue();
+    if(isset($filmVogue)){ ?>
+        <div class="hero-banner">
+            <?php if($filmVogue->getBanniere()!=null){?>
+                <img src="<?php echo $filmVogue->getBanniere()?>" alt="banniere">
+            <?php }else{?>
+                <img src="../../img/default.png" alt="banniere">
+            <?php }?>
+
+            <div class="hero-gradient"></div>
+            <span class="hero-badge">🔥 En ce moment</span>
+            <div class="hero-content">
+                <h1><?= htmlspecialchars($filmVogue->getNom()) ?></h1>
+                <p><?= htmlspecialchars(substr($filmVogue->getDescription(), 0, 150)) ?>...</p>
+                <a href="../Films/ficheFilm.php?id=<?= $filmVogue->getIdFilm() ?>"
+                   class="btn btn-danger btn-lg px-4">
+                    ▶ Voir le film
+                </a>
+            </div>
+        </div>
+    <?php } ?>
+
     <div class="section">
         <div class="header">
             <h2>Films au cinéma</h2>
-            <a href="allFilms.php">Tous les films actuellement au cinéma ></a>
+            <a href="allFilms.php" class="btn btn-danger">Tous les films actuellement au cinéma </a>
         </div>
 
         <div class="film-list">
@@ -87,7 +161,7 @@ $tabFilm = $rep->getAllFilm();
                         <?php } else { ?>
                                 <form method="POST" action="../Films/ficheFilm.php?id=<?=$film->getIdFilm()?>">
                                 <button class="btn btn-dark" type="submit">
-                                    <img src="../../img/default.png" alt="<?= $film->getNom() ?>">
+                                    <img src="../../img/default.png" alt="<?= $film->getNom()?>">
                                 </button>
                                     </form>
                         <?php } ?>
