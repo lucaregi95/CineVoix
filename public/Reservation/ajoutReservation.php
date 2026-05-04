@@ -3,6 +3,9 @@
 require_once "../../src/repository/ReservationRepository.php";
 require  "../../src/traitement/newReservation.php";
 
+$ref_seance = $_POST['idSeance'];
+$ref_acteur = $_POST['idSeance'];
+
 if(isset($reservation)){
     $rep = new ReservationRepository();
     $rep-> ajouterReservation($reservation);
@@ -31,7 +34,7 @@ if(isset($reservation)){
     <label>Senior :</label>
     <input name="qte_senior" id="qte_senior" type="number" min="0" value="0"><br><br>
 
-    <label
+    <label> </label>
 
     <button type="submit">Valider la réservation</button>
 </form>
