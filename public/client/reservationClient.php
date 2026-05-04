@@ -109,6 +109,14 @@ $repFilm = new FilmRepository();
                 ?>
                 <div class="col-md-6">
                     <div class="card shadow-sm">
+                        <?php if ($peutModifier) { ?>
+                            <hr style="border-color:#333; ">
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="../Reservation/modificationReservation.php?id=<?=$reservation->getIdReservation() ?>" class="btn btn-sm btn-outline-light">Modifier</a>
+                                <a href="../Reservation/suppressionReservation.php?id=<?= $reservation->getIdReservation() ?>" class="btn btn-sm btn-outline-danger">Annuler</a>
+                            </div>
+                        <?php } ?>
+
                         <div class="card-body">
 
                             <div class="d-flex gap-3 align-items-start">
@@ -129,7 +137,7 @@ $repFilm = new FilmRepository();
                             <hr style="border-color:#333;">
 
                             <div class="info-label">Places</div>
-                            <div><cl></cl>
+                            <div>
                                 <?php if ($reservation->getQtePleinTarif() > 0) { ?>
                                     Plein tarif : <?= $reservation->getQtePleinTarif() ?>&nbsp;&nbsp;
                                 <?php } ?>
