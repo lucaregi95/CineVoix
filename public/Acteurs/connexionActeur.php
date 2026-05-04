@@ -46,7 +46,7 @@ $inscription="Pas de compte ? Inscrivez-vous";
                 <?php } ?>
                 <h6><?=$erreur?></h6>
 
-                <button type="submit"">Connectez-vous !</button><br><br>
+                <button type="submit">Connectez-vous !</button><br><br>
             </form>
             <div class="mb-3">
                 <a href="ajoutActeur.php"><?=$inscription?></a>

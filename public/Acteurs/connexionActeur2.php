@@ -24,11 +24,16 @@ $rep = new ActeursRepository();
 $result = $rep->connecterActeur($email, $mdp);
 
 if (!$result) {
-    // Aucun utilisateur trouvé : redirection avec message d'erreur
     header("Location: connexionActeur.php?erreur=unknown");
+    exit();
 } else if ($result['etat']==0){
     header("Location: connexionActeur.php?erreur=bannir");
-}else{
+    exit();
+} else if (!password_verify($mdp, $result['mdp'])) {
+    header("Location: connexionActeur.php?erreur=unknown");
+    exit();
+}
+else{
 
     session_start();
     // Stockage des informations de l'utilisateur en session
@@ -44,7 +49,7 @@ if (!$result) {
     $_SESSION['role']   = $result["role"];
     $_SESSION['date_creation']   = $result["date_creation"];
 
-    header('Location: tabActeur.php');
+    header('Location: ../client/accueil.php');
 
 
 
