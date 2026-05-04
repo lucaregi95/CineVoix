@@ -13,8 +13,18 @@ require_once "../../src/repository/CodePromoRepository.php";
 require_once "../../src/modele/Salle.php";
 require_once "../../src/repository/SalleRepository.php";
 
+<<<<<<< HEAD
+$ref_seance = $_POST['idSeance'];
+$ref_acteur = $_POST['idSeance'];
+
+if(isset($reservation)){
+    $rep = new ReservationRepository();
+    $rep-> ajouterReservation($reservation);
+    header('Location: ajoutReservation '.$_SERVER['PHP_SELF']);
+=======
 if (!isset($_SESSION['id'])) {
     header("Location: ../Acteurs/connexionActeur.php");
+>>>>>>> 4d4e4113cf3499f368ee3c88b15969c6ac6bfe53
     exit();
 }
 
@@ -161,6 +171,9 @@ if (isset($_POST['ref_seance'])) {
         </div>
     </div>
 
+<<<<<<< HEAD
+    <label> </label>
+=======
     <?php if ($succes != null) { ?>
         <div class="alert alert-success"><?= $succes ?></div>
         <div class="mt-3 text-center">
@@ -232,6 +245,7 @@ if (isset($_POST['ref_seance'])) {
     <?php } ?>
 
 </div>
+>>>>>>> 4d4e4113cf3499f368ee3c88b15969c6ac6bfe53
 
 </body>
 </html>
