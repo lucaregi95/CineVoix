@@ -3,7 +3,6 @@ require_once('../../src/bdd/Bdd.php');
 require_once('../../src/modele/Acteurs.php');
 require_once('../../src/repository/ActeursRepository.php');
 
-// Récupération des données du formulaire de connexion
 if (isset($_POST["email"])) {
     $email = $_POST["email"];
 } else {
@@ -19,7 +18,6 @@ if (isset($_POST["mdp"])) {
 if(isset($_POST["page"])){
     $page  = $_POST["page"];}
 
-// Requête préparée : sélectionne l'utilisateur correspondant
 $rep = new ActeursRepository();
 $result = $rep->connecterActeur($email, $mdp);
 
@@ -36,7 +34,6 @@ if (!$result) {
 else{
 
     session_start();
-    // Stockage des informations de l'utilisateur en session
     $_SESSION['id']     = $result["id_acteur"];
     $_SESSION['nom']    = $result["nom"];
     $_SESSION['prenom'] = $result["prenom"];
