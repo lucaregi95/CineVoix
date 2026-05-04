@@ -136,31 +136,34 @@ $tabFilm = $rep->getAllFilmTri();
 
     <nav class="navbar navbar-expand-sm navbar-dark border-3" style="background-color: #0d1b4c;">
         <div class="container d-flex justify-content-evenly align-items-center">
+
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'accueil'): ?>
                 <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
             <?php endif; ?>
-            <a class="nav-link text-white" href="accueil.php">Accueil</a>
-            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-                <a class="nav-link text-white" href="../crud.php">Accès aux cruds</a>
-            <?php elseif (!isset($_SESSION['role']) || $_SESSION['role'] == 'user'): ?>
-                <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
-            <?php endif; ?>
-            <a class="nav-link text-white" href="profil.php">Profil</a>
-            <?php if(isset($_SESSION["id"])): ?>
-                <form action="../Acteurs/deconnexionActeur.php">
-                    <button type="submit" class="nav-link text-white">Déconnexion</button>
-                </form>
-            <?php endif; ?>
 
-            <?php if(!isset($_SESSION["id"])): ?>
-                <form action="../Acteurs/connexionActeur2.php">
-                    <button type="submit" class="nav-link text-white">Connexion</button>
+            <a class="nav-link text-white" href="accueil.php">Accueil</a>
+
+            <?php if(isset($_SESSION["id"])): ?>
+                <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
+                <a class="nav-link text-white" href="profil.php">Profil</a>
+                <form action="../Acteurs/deconnexionActeur.php">
+                    <button type="submit" class="nav-link text-white border-0 bg-transparent">Déconnexion</button>
                 </form>
+            <?php else: ?>
+                <button type="button" class="nav-link text-white border-0 bg-transparent"
+                        data-bs-toggle="modal" data-bs-target="#modalCompte">
+                    Mes réservations
+                </button>
+                <button type="button" class="nav-link text-white border-0 bg-transparent"
+                        data-bs-toggle="modal" data-bs-target="#modalCompte">
+                    Connexion
+                </button>
             <?php endif; ?>
 
         </div>
     </nav>
 
+    <!-- MODALE MON COMPTE (visiteurs non connectés) -->
     <div class="modal fade" id="modalCompte" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content rounded-4 border-0 p-2">
@@ -172,11 +175,11 @@ $tabFilm = $rep->getAllFilmTri();
 
                 <div class="modal-body px-4 pb-4">
                     <a href="../Acteurs/connexionActeur.php" class="btn w-100 fw-semibold py-3 mb-2"
-                       style="background:#0d1b4c; color:#cccccc; border-radius:12px;">
+                       style="background:#0d1b4c; color:white; border-radius:12px;">
                         Me connecter
                     </a>
-                    <a href="../Acteurs/inscriptionActeur.php" class="btn btn-outline-secondary w-100 py-3"
-                       style="border-radius:12px; color: black ">
+                    <a href="../Acteurs/ajoutActeur.php" class="btn btn-outline-secondary w-100 py-3"
+                       style="border-radius:12px;">
                         Créer mon compte
                     </a>
                 </div>

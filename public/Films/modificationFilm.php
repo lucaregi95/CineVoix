@@ -57,7 +57,7 @@ $o=$cpr->getFilm($id_film);
             </div>
             <div class="mb-3">
                 <label>Affiche :</label>
-                <input type="file" name="affiche" value="<?php echo $o->getAffiche()?>">
+                <input type="url" name="affiche" value="<?php echo $o->getAffiche()?>">
             </div>
             <div class="mb-3">
                 <label>Genre :</label>

@@ -35,7 +35,7 @@ if(!empty($tabFilm)){
             <th>ID</th>
             <th>Nom</th>
             <th>Description</th>
-            <th>Durée</th>
+            <th>Durée (min)</th>
             <th>Affiche</th>
             <th>Genre</th>
             <th>Age Minimum</th>
