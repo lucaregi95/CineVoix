@@ -12,10 +12,10 @@ class ReservationRepository
     {
         $sql = "SELECT * FROM reservation WHERE id_reservation = :id_reservation";
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':id_reservation', $id_reservation, PDO::PARAM_INT);
+        $req->bindValue(':id_reservation', $id_reservation);
         $req->execute();
 
-        $result = $req->fetch(PDO::FETCH_ASSOC);
+        $result = $req->fetch();
 
         if (!$result) {
             return null;
@@ -40,7 +40,7 @@ class ReservationRepository
         $req = $this->connexionBdd->prepare($sql);
         $req->execute();
 
-        $results = $req->fetchAll(PDO::FETCH_ASSOC);
+        $results = $req->fetchAll();
         $tabReservations = [];
 
         foreach ($results as $result) {
@@ -70,13 +70,13 @@ class ReservationRepository
         $req = $this->connexionBdd->prepare($sql);
 
         $req->bindValue(':statut', $reservation->getStatut());
-        $req->bindValue(':qte_plein_tarif', $reservation->getQtePleinTarif(), PDO::PARAM_INT);
-        $req->bindValue(':qte_etudiant', $reservation->getQteEtudiant(), PDO::PARAM_INT);
-        $req->bindValue(':qte_senior', $reservation->getQteSenior(), PDO::PARAM_INT);
+        $req->bindValue(':qte_plein_tarif', $reservation->getQtePleinTarif());
+        $req->bindValue(':qte_etudiant', $reservation->getQteEtudiant());
+        $req->bindValue(':qte_senior', $reservation->getQteSenior());
         $req->bindValue(':moyen_paiement', $reservation->getMoyenPaiement());
-        $req->bindValue(':ref_seance', $reservation->getRefSeance(), PDO::PARAM_INT);
-        $req->bindValue(':ref_code', $reservation->getRefCode(), PDO::PARAM_INT);
-        $req->bindValue(':ref_acteur', $reservation->getRefActeur(), PDO::PARAM_INT);
+        $req->bindValue(':ref_seance', $reservation->getRefSeance());
+        $req->bindValue(':ref_code', $reservation->getRefCode());
+        $req->bindValue(':ref_acteur', $reservation->getRefActeur());
 
         return $req->execute();
     }
@@ -85,7 +85,7 @@ class ReservationRepository
     {
         $sql = "DELETE FROM reservation WHERE id_reservation = :id_reservation";
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':id_reservation', $reservation->getIdReservation(), PDO::PARAM_INT);
+        $req->bindValue(':id_reservation', $reservation->getIdReservation());
 
         return $req->execute();
     }
@@ -106,14 +106,14 @@ class ReservationRepository
         $req = $this->connexionBdd->prepare($sql);
 
         $req->bindValue(':statut', $reservation->getStatut());
-        $req->bindValue(':qte_plein_tarif', $reservation->getQtePleinTarif(), PDO::PARAM_INT);
-        $req->bindValue(':qte_etudiant', $reservation->getQteEtudiant(), PDO::PARAM_INT);
-        $req->bindValue(':qte_senior', $reservation->getQteSenior(), PDO::PARAM_INT);
+        $req->bindValue(':qte_plein_tarif', $reservation->getQtePleinTarif());
+        $req->bindValue(':qte_etudiant', $reservation->getQteEtudiant());
+        $req->bindValue(':qte_senior', $reservation->getQteSenior());
         $req->bindValue(':moyen_paiement', $reservation->getMoyenPaiement());
-        $req->bindValue(':ref_seance', $reservation->getRefSeance(), PDO::PARAM_INT);
-        $req->bindValue(':ref_code', $reservation->getRefCode(), PDO::PARAM_INT);
-        $req->bindValue(':ref_acteur', $reservation->getRefActeur(), PDO::PARAM_INT);
-        $req->bindValue(':id_reservation', $reservation->getIdReservation(), PDO::PARAM_INT);
+        $req->bindValue(':ref_seance', $reservation->getRefSeance());
+        $req->bindValue(':ref_code', $reservation->getRefCode());
+        $req->bindValue(':ref_acteur', $reservation->getRefActeur());
+        $req->bindValue(':id_reservation', $reservation->getIdReservation());
 
         return $req->execute();
     }
@@ -122,10 +122,10 @@ class ReservationRepository
     {
         $sql = "SELECT * FROM reservation WHERE ref_acteur = :id_acteur ORDER BY id_reservation DESC";
         $req = $this->connexionBdd->prepare($sql);
-        $req->bindValue(':id_acteur', $id_acteur, PDO::PARAM_INT);
+        $req->bindValue(':id_acteur', $id_acteur);
         $req->execute();
 
-        $results = $req->fetchAll(PDO::FETCH_ASSOC);
+        $results = $req->fetchAll();
         $tabReservations = [];
 
         foreach ($results as $result) {
