@@ -12,6 +12,7 @@ class Film
     private $realisateur;
     private $date_sortie;
     private $bande_annonce;
+    private $banniere;
 
     /**
      * @param $id_film
@@ -24,8 +25,9 @@ class Film
      * @param $realisateur
      * @param $date_sortie
      * @param $bande_annonce
+     * @param $banniere
      */
-    public function __construct($id_film, $nom, $description, $duree, $affiche, $genre, $age_min, $realisateur, $date_sortie, $bande_annonce)
+    public function __construct($id_film, $nom, $description, $duree, $affiche, $genre, $age_min, $realisateur, $date_sortie, $bande_annonce,$banniere)
     {
         $this->id_film = $id_film;
         $this->nom = $nom;
@@ -37,6 +39,7 @@ class Film
         $this->realisateur = $realisateur;
         $this->date_sortie = $date_sortie;
         $this->bande_annonce = $bande_annonce;
+        $this->banniere = $banniere;
     }
 
     /**
@@ -198,6 +201,24 @@ class Film
     {
         $this->id_film = $id_film;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getBanniere()
+    {
+        return $this->banniere;
+    }
+
+    /**
+     * @param mixed $banniere
+     */
+    public function setBanniere($banniere)
+    {
+        $this->banniere = $banniere;
+    }
+
+
 
 
 }

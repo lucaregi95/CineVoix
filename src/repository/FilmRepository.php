@@ -16,19 +16,19 @@ class FilmRepository
         $req->bindValue(':idfilm', $id_film);
         $req->execute();
         $result = $req->fetch();
-        $film = new Film($result["id_film"], $result["nom"], $result["description"], $result["duree"],$result["affiche"],$result["genre"],$result["age_min"],$result["realisateur"],$result["date_sortie"],$result["bande_annonce"]);
+        $film = new Film($result["id_film"], $result["nom"], $result["description"], $result["duree"],$result["affiche"],$result["genre"],$result["age_min"],$result["realisateur"],$result["date_sortie"],$result["bande_annonce"],$result["banniere"]);
         return $film;
     }
 
     public function getAllFilmTri(){
-        $sql = "SELECT * FROM Film WHERE date_sortie<=:date ORDER BY date_sortie ASC";
+        $sql = "SELECT * FROM Film WHERE date_sortie<=:date ORDER BY date_sortie DESC";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':date', date('Y-m-d'));
         $req->execute();
         $results = $req->fetchAll();
         $tabFilm = array();
         foreach ($results as $result) {
-            $film = new Film($result["id_film"], $result["nom"], $result["description"], $result["duree"],$result["affiche"],$result["genre"],$result["age_min"],$result["realisateur"],$result["date_sortie"],$result["bande_annonce"]);
+            $film = new Film($result["id_film"], $result["nom"], $result["description"], $result["duree"],$result["affiche"],$result["genre"],$result["age_min"],$result["realisateur"],$result["date_sortie"],$result["bande_annonce"],$result["banniere"]);
             $tabFilm[] = $film;
         }
         return $tabFilm;
@@ -42,7 +42,7 @@ class FilmRepository
         $results = $req->fetchAll();
         $tabFilm = array();
         foreach ($results as $result) {
-            $film = new Film($result["id_film"], $result["nom"], $result["description"], $result["duree"],$result["affiche"],$result["genre"],$result["age_min"],$result["realisateur"],$result["date_sortie"],$result["bande_annonce"]);
+            $film = new Film($result["id_film"], $result["nom"], $result["description"], $result["duree"],$result["affiche"],$result["genre"],$result["age_min"],$result["realisateur"],$result["date_sortie"],$result["bande_annonce"],$result["banniere"]);
             $tabFilm[] = $film;
         }
         return $tabFilm;
@@ -50,7 +50,7 @@ class FilmRepository
 
     public function ajouterFilm(Film $film)
     {
-        $sql = "INSERT INTO film VALUES (:id_film,:nom,:description,:duree,:affiche,:genre,:age_min,:realisateur,:date_sortie,:bande_annonce)";
+        $sql = "INSERT INTO film VALUES (:id_film,:nom,:description,:duree,:affiche,:genre,:age_min,:realisateur,:date_sortie,:bande_annonce,:banniere)";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_film', $film->getIdFilm());
         $req->bindValue(':nom', $film->getNom());
@@ -62,6 +62,7 @@ class FilmRepository
         $req->bindValue(':realisateur', $film->getRealisateur());
         $req->bindValue(':date_sortie', $film->getDateSortie());
         $req->bindValue(':bande_annonce', $film->getBandeAnnonce());
+        $req->bindvalue(':banniere', $film->getBanniere());
         return $req->execute();
     }
 
@@ -73,7 +74,7 @@ class FilmRepository
     }
 
     public function modifierFilm(Film $film){
-        $sql='UPDATE film SET nom = :nom , description = :description , duree = :duree , affiche = :affiche , genre = :genre , age_min = :age_min , realisateur = :realisateur , date_sortie = :date_sortie , bande_annonce = :bande_annonce WHERE id_film = :id_film';
+        $sql='UPDATE film SET nom = :nom , description = :description , duree = :duree , affiche = :affiche , genre = :genre , age_min = :age_min , realisateur = :realisateur , date_sortie = :date_sortie , bande_annonce = :bande_annonce, banniere=:banniere WHERE id_film = :id_film';
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':id_film', $film->getIdFilm());
         $req->bindValue(':nom', $film->getNom());
@@ -85,7 +86,20 @@ class FilmRepository
         $req->bindValue(':realisateur', $film->getRealisateur());
         $req->bindValue(':date_sortie', $film->getDateSortie());
         $req->bindValue(':bande_annonce', $film->getBandeAnnonce());
+        $req->bindValue(':banniere', $film->getBanniere());
+
         return $req->execute();
+    }
+
+    public function getFilmEnVogue(){
+        $sql = "SELECT * FROM film ORDER BY date_sortie DESC LIMIT 1";
+        $req = $this->connexionBdd->prepare($sql);
+        $req->execute();
+        $result = $req->fetch();
+        if ($result) {
+            return new Film($result["id_film"], $result["nom"], $result["description"], $result["duree"],$result["affiche"],$result["genre"],$result["age_min"],$result["realisateur"],$result["date_sortie"],$result["bande_annonce"],$result["banniere"]); // ← convertir en objet Film
+        }
+        return null;
     }
 
 }

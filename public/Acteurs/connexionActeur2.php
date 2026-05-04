@@ -3,7 +3,6 @@ require_once('../../src/bdd/Bdd.php');
 require_once('../../src/modele/Acteurs.php');
 require_once('../../src/repository/ActeursRepository.php');
 
-// Récupération des données du formulaire de connexion
 if (isset($_POST["email"])) {
     $email = $_POST["email"];
 } else {
@@ -19,19 +18,22 @@ if (isset($_POST["mdp"])) {
 if(isset($_POST["page"])){
     $page  = $_POST["page"];}
 
-// Requête préparée : sélectionne l'utilisateur correspondant
 $rep = new ActeursRepository();
 $result = $rep->connecterActeur($email, $mdp);
 
 if (!$result) {
-    // Aucun utilisateur trouvé : redirection avec message d'erreur
-    header("Location: connexionActeur.php?erreur=unknown");
+    header("Location: connexionActeur.php?erreur=inconnu");
+    exit();
 } else if ($result['etat']==0){
     header("Location: connexionActeur.php?erreur=bannir");
-}else{
+    exit();
+} else if (!password_verify($mdp, $result['mdp'])) {
+    header("Location: connexionActeur.php?erreur=unknown");
+    exit();
+}
+else{
 
     session_start();
-    // Stockage des informations de l'utilisateur en session
     $_SESSION['id']     = $result["id_acteur"];
     $_SESSION['nom']    = $result["nom"];
     $_SESSION['prenom'] = $result["prenom"];
@@ -44,7 +46,7 @@ if (!$result) {
     $_SESSION['role']   = $result["role"];
     $_SESSION['date_creation']   = $result["date_creation"];
 
-    header('Location: tabActeur.php');
+    header('Location: ../client/accueil.php');
 
 
 
