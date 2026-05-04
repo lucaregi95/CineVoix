@@ -13,6 +13,7 @@ require_once "../../src/repository/CodePromoRepository.php";
 require_once "../../src/modele/Salle.php";
 require_once "../../src/repository/SalleRepository.php";
 
+
 if (!isset($_SESSION['id'])) {
     header("Location: ../Acteurs/connexionActeur.php");
     exit();
