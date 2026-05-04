@@ -24,7 +24,44 @@ $tabFilm = $rep->getAllFilm();
         .section { padding: 20px; }
         .header { display: flex; justify-content: space-between; align-items: center; }
         .header a { color: #ccc; text-decoration: none; font-size: 14px; }
-        .film-list { display: flex; gap: 15px; overflow-x: auto; padding-top: 15px; padding-bottom: 10px; }
+
+        /* Carousel */
+        .carousel-wrapper {
+            position: relative;
+            overflow: hidden; /* ← les flèches restent dans le cadre */
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 40%; /* ← centré sur l'image (pas sur toute la carte) */
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .carousel-btn:hover { background: rgba(229,9,20,0.85); }
+        .carousel-btn.left { left: 5px; } /* ← sur le film, pas à côté */
+        .carousel-btn.right { right: 5px; }
+
+        .film-list {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 15px 10px 10px 10px; /* ← plus de padding latéral large */
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+        .film-list::-webkit-scrollbar { display: none; }
+
         .film { min-width: 150px; position: relative; flex-shrink: 0; }
         .film p { margin-top: 8px; font-size: 14px; }
         .film img {
@@ -36,6 +73,8 @@ $tabFilm = $rep->getAllFilm();
             display: block;
         }
         .film:hover img { transform: scale(1.05); }
+
+        /* Hero banner */
         .hero-banner {
             position: relative;
             width: 100%;
@@ -105,26 +144,23 @@ $tabFilm = $rep->getAllFilm();
                     <button type="submit" class="nav-link text-white">Déconnexion</button>
                 </form>
             <?php endif; ?>
-
             <?php if(!isset($_SESSION["id"])): ?>
                 <form action="../Acteurs/connexionActeur2.php">
                     <button type="submit" class="nav-link text-white">Connexion</button>
                 </form>
             <?php endif; ?>
-
         </div>
     </nav>
 
     <?php
     $filmVogue = $rep->getFilmEnVogue();
-    if(isset($filmVogue)){ ?>
+    if (isset($filmVogue)) { ?>
         <div class="hero-banner">
-            <?php if($filmVogue->getBanniere()!=null){?>
-                <img src="<?php echo $filmVogue->getBanniere()?>" alt="banniere">
-            <?php }else{?>
+            <?php if ($filmVogue->getBanniere() != null) { ?>
+                <img src="<?php echo $filmVogue->getBanniere() ?>" alt="banniere">
+            <?php } else { ?>
                 <img src="../../img/default.png" alt="banniere">
-            <?php }?>
-
+            <?php } ?>
             <div class="hero-gradient"></div>
             <span class="hero-badge">🔥 En ce moment</span>
             <div class="hero-content">
@@ -141,37 +177,41 @@ $tabFilm = $rep->getAllFilm();
     <div class="section">
         <div class="header">
             <h2>Films au cinéma</h2>
-            <a href="allFilms.php" class="btn btn-danger">Tous les films actuellement au cinéma </a>
+            <a href="allFilms.php" class="btn btn-danger">Tous les films actuellement au cinéma</a>
         </div>
 
-        <div class="film-list">
-            <?php if (!empty($tabFilm)) { ?>
-                <?php foreach ($tabFilm as $film) { ?>
-                    <div class="film">
-                        <?php
-                        $affiche = $film->getAffiche();
-                        if ($affiche != null && $affiche != "") {
-                            ?>
-                            <form method="POST" action="../Films/ficheFilm.php?id=<?=$film->getIdFilm()?>">
-                                <button class="btn btn-dark" type="submit">
-                                    <img src="<?= $affiche ?>" alt="<?= $film->getNom() ?>">
-                                </button>
-                            </form>
+        <div class="carousel-wrapper">
+            <button class="carousel-btn left" onclick="document.querySelector('.film-list').scrollBy({left: -500, behavior: 'smooth'})">‹</button>
 
-                        <?php } else { ?>
-                                <form method="POST" action="../Films/ficheFilm.php?id=<?=$film->getIdFilm()?>">
-                                <button class="btn btn-dark" type="submit">
-                                    <img src="../../img/default.png" alt="<?= $film->getNom()?>">
-                                </button>
-                                    </form>
-                        <?php } ?>
-                        <p><?= $film->getNom() ?></p>
-                        <a href="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>" class="btn btn-sm btn-outline-light">Info</a>
-                    </div>
+            <div class="film-list">
+                <?php if (!empty($tabFilm)) { ?>
+                    <?php foreach ($tabFilm as $film) { ?>
+                        <div class="film">
+                            <?php
+                            $affiche = $film->getAffiche();
+                            if ($affiche != null && $affiche != "") { ?>
+                                <form method="POST" action="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>">
+                                    <button class="btn btn-dark" type="submit">
+                                        <img src="<?= $affiche ?>" alt="<?= $film->getNom() ?>">
+                                    </button>
+                                </form>
+                            <?php } else { ?>
+                                <form method="POST" action="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>">
+                                    <button class="btn btn-dark" type="submit">
+                                        <img src="../../img/default.png" alt="<?= $film->getNom() ?>">
+                                    </button>
+                                </form>
+                            <?php } ?>
+                            <p><?= $film->getNom() ?></p>
+                            <a href="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>" class="btn btn-sm btn-outline-light">Info</a>
+                        </div>
+                    <?php } ?>
+                <?php } else { ?>
+                    <p>Aucun film pour le moment...</p>
                 <?php } ?>
-            <?php } else { ?>
-                <p>Aucun film pour le moment...</p>
-            <?php } ?>
+            </div>
+
+            <button class="carousel-btn right" onclick="document.querySelector('.film-list').scrollBy({left: 500, behavior: 'smooth'})">›</button>
         </div>
     </div>
 
