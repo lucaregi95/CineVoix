@@ -50,8 +50,8 @@ if(isset($film)){
                 <input type="text" name="realisateur">
             </div>
             <div class="mb-3">
-                <label>Date de sortie :</label>
-                <input type="date" name="date_sortie">
+                <label>Date de sortie* :</label>
+                <input type="date" name="date_sortie" required>
             </div>
             <div class="mb-3">
                 <label>Bande-annonce :</label>

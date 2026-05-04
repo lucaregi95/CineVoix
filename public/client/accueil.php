@@ -4,7 +4,7 @@ require_once "../../src/traitement/newFilm.php";
 require_once "../../src/repository/FilmRepository.php";
 require_once "../../src/modele/Film.php";
 $rep = new FilmRepository();
-$tabFilm = $rep->getAllFilm();
+$tabFilm = $rep->getAllFilmTri();
 ?>
 
 <!DOCTYPE html>
