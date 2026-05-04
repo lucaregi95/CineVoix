@@ -51,12 +51,26 @@ $repFilm = new FilmRepository();
 </head>
 <body>
 
-<nav class="navbar navbar-expand-sm">
+<nav class="navbar navbar-expand-sm navbar-dark border-3" style="background-color: #0d1b4c;">
     <div class="container d-flex justify-content-evenly align-items-center">
-        <a class="nav-link" href="accueil.php">Accueil</a>
-        <a class="nav-link" href="reservationClient.php">Mes réservations</a>
-        <a class="nav-link" href="profil.php">Profil</a>
-        <a class="nav-link text-danger fw-bold" href="../Acteurs/deconnexionActeur.php">Déconnecter</a>
+        <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'accueil' || $_SESSION['role'] == 'admin')) { ?>
+            <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
+        <?php } ?>
+        <a class="nav-link text-white" href="accueil.php">Accueil</a>
+        <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
+        <a class="nav-link text-white" href="profil.php">Profil</a>
+        <?php if(isset($_SESSION["id"])): ?>
+            <form action="../Acteurs/deconnexionActeur.php">
+                <button type="submit" class="nav-link text-white">Déconnexion</button>
+            </form>
+        <?php endif; ?>
+
+        <?php if(!isset($_SESSION["id"])): ?>
+            <form action="../Acteurs/connexionActeur2.php">
+                <button type="submit" class="nav-link text-white">Connexion</button>
+            </form>
+        <?php endif; ?>
+
     </div>
 </nav>
 
