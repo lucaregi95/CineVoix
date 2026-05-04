@@ -1,6 +1,5 @@
-<a href="tabFilm.php" class="btn-back">
-    <i class="bi bi-arrow-left me-1"></i> Retour
-</a><?php
+<?php
+session_start();
 require_once "../../src/bdd/Bdd.php";
 require_once "../../src/modele/Film.php";
 require_once "../../src/repository/FilmRepository.php";
@@ -92,9 +91,18 @@ $film = $rep->getFilm($id);
             </a>
         <?php endif; ?>
 
-        <a href="../Reservation/ajoutReservation.php?id_film=<?= $film->getIdFilm() ?>" class="btn btn-danger mt-2">
-            Réserver
-        </a>
+        <?php if (!isset($_SESSION['role']) || $_SESSION['role'] == 'user'): ?>
+            <a href="../Reservation/ajoutReservation.php?id_film=<?= $film->getIdFilm() ?>" class="btn btn-danger mt-2">
+                Réserver
+            </a>
+        <?php elseif (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+            <a href="../Films/modificationFilm.php?id=<?= $film->getIdFilm() ?>" class="btn btn-warning mt-2">
+                Modifier
+            </a>
+            <a href="../Films/suppressionFilm.php?id=<?= $film->getIdFilm() ?>" class="btn btn-danger mt-2">
+                Supprimer
+            </a>
+        <?php endif; ?>
 
         <div class="mt-4">
             <a href="../client/accueil.php" class="btn btn-outline-light btn-sm">← Retour</a>
