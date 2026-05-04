@@ -8,7 +8,7 @@ if (!isset($_GET['id'])) {
     exit;
 }
 
-$id = (int) $_GET['id'];
+$id = $_GET['id'];
 $rep = new FilmRepository();
 $film = $rep->getFilm($id);
 ?>

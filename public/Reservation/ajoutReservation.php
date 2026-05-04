@@ -13,107 +13,110 @@ require_once "../../src/repository/CodePromoRepository.php";
 require_once "../../src/modele/Salle.php";
 require_once "../../src/repository/SalleRepository.php";
 
-
 if (!isset($_SESSION['id'])) {
     header("Location: ../Acteurs/connexionActeur.php");
     exit();
 }
 
-    if (isset($_GET['id_film'])) {
-        $id_film = (int)$_GET['id_film'];
-    } else if (isset($_POST['id_film'])) {
-        $id_film = (int)$_POST['id_film'];
+if (isset($_GET['id_film'])) {
+    $id_film = $_GET['id_film'];
+} else if (isset($_POST['id_film'])) {
+    $id_film = $_POST['id_film'];
+} else {
+    header('Location: ../client/accueil.php');
+    exit();
+}
+
+$repFilm = new FilmRepository();
+$film = $repFilm->getFilm($id_film);
+
+$repSeance = new SeancesRepository();
+$toutesSeances = $repSeance->getAllSeances();
+
+$seancesDuFilm = array();
+foreach ($toutesSeances as $s) {
+    if ($s->getRefFilm() == $id_film) {
+        $seancesDuFilm[] = $s;
+    }
+}
+
+$erreur = null;
+$succes = null;
+
+if (isset($_POST['ref_seance'])) {
+
+    $qte_plein  = (int) $_POST['qte_plein_tarif'];
+    $qte_etu    = (int) $_POST['qte_etudiant'];
+    $qte_senior = (int) $_POST['qte_senior'];
+
+    if ($qte_plein + $qte_etu + $qte_senior == 0) {
+        $erreur = "Veuillez sélectionner au moins une place.";
     } else {
-        header('Location: ../client/accueil.php');
-        exit();
-    }
 
-    $repFilm = new FilmRepository();
-    $film = $repFilm->getFilm($id_film);
+        $id_acteur = $_SESSION['id'];
 
-    $repSeance = new SeancesRepository();
-    $toutesSeances = $repSeance->getAllSeances();
-
-    $seancesDuFilm = array();
-    foreach ($toutesSeances as $s) {
-        if ($s->getRefFilm() == $id_film) {
-            $seancesDuFilm[] = $s;
-        }
-    }
-
-    $erreur = null;
-    $succes = null;
-
-    if (isset($_POST['ref_seance'])) {
-
-        $qte_plein = (int)$_POST['qte_plein_tarif'];
-        $qte_etu = (int)$_POST['qte_etudiant'];
-        $qte_senior = (int)$_POST['qte_senior'];
-
-        if ($qte_plein + $qte_etu + $qte_senior == 0) {
-            $erreur = "Veuillez sélectionner au moins une place.";
-        } else {
-
-            $id_acteur = $_SESSION['id'];
-
-            $ref_code = null;
-            if (isset($_POST['code_promo']) && $_POST['code_promo'] != "") {
-                $repCode = new CodePromoRepository();
-                $tousLesCodes = $repCode->getAllCodePromo();
-                foreach ($tousLesCodes as $c) {
-                    if ($c->getCodePromo() == $_POST['code_promo'] && $c->getEtat() == 1) {
-                        $ref_code = $c->getIdCodePromo();
-                        break;
-                    }
-                }
-                if ($ref_code == null) {
-                    $erreur = "Code promo invalide ou inactif.";
+        // Vérification code promo
+        $ref_code = null;
+        if (isset($_POST['code_promo']) && $_POST['code_promo'] != "") {
+            $repCode = new CodePromoRepository();
+            $tousLesCodes = $repCode->getAllCodePromo();
+            foreach ($tousLesCodes as $c) {
+                if ($c->getCodePromo() == $_POST['code_promo'] && $c->getEtat() == 1) {
+                    $ref_code = $c->getIdCodePromo();
+                    break;
                 }
             }
-
-            if ($erreur == null) {
-                $repRes = new ReservationRepository();
-                $dejaReserve = $repRes->getReservationByActeurEtSeance($id_acteur, $_POST['ref_seance']);
-                if ($dejaReserve) {
-                    $erreur = "Vous avez déjà une réservation pour cette séance.";
-                }
-            }
-
-            if ($erreur == null) {
-                $seanceChoisie = $repSeance->getSeances($_POST['ref_seance']);
-                $repSalle = new SalleRepository();
-                $salle = $repSalle->getSalle($seanceChoisie->getRefSalle());
-                $placesDejaReservees = $repRes->getNombrePlacesReservees($_POST['ref_seance']);
-                $placesRestantes = $salle->getCapacite() - $placesDejaReservees;
-                if ($qte_plein + $qte_etu + $qte_senior > $placesRestantes) {
-                    $erreur = "Plus assez de places disponibles. Il reste " . $placesRestantes . " places disponibles.";
-                }
-            }
-
-            if ($erreur == null) {
-                $moyen_paiement = null;
-                if (isset($_POST['moyen_paiement']) && $_POST['moyen_paiement'] != "") {
-                    $moyen_paiement = $_POST['moyen_paiement'];
-                }
-
-                $reservation = new Reservation(
-                    null,
-                    'en attente',
-                    $qte_plein,
-                    $qte_etu,
-                    $qte_senior,
-                    $moyen_paiement,
-                    $_POST['ref_seance'],
-                    $ref_code,
-                    $id_acteur
-                );
-
-                $repRes = new ReservationRepository();
-                $repRes->ajouterReservation($reservation);
-                $succes = "Réservation effectuée avec succès !";
+            if ($ref_code == null) {
+                $erreur = "Code promo invalide ou inactif.";
             }
         }
+
+        // Vérification doublon réservation
+        if ($erreur == null) {
+            $repRes = new ReservationRepository();
+            $dejaReserve = $repRes->getReservationByActeurEtSeance($id_acteur, $_POST['ref_seance']);
+            if ($dejaReserve) {
+                $erreur = "Vous avez déjà une réservation pour cette séance.";
+            }
+        }
+
+        // Vérification places disponibles
+        if ($erreur == null) {
+            $seanceChoisie = $repSeance->getSeances($_POST['ref_seance']);
+            $repSalle = new SalleRepository();
+            $salle = $repSalle->getSalle($seanceChoisie->getRefSalle());
+            $placesDejaReservees = $repRes->getNombrePlacesReservees($_POST['ref_seance']);
+            $placesRestantes = $salle->getCapacite() - $placesDejaReservees;
+            if ($qte_plein + $qte_etu + $qte_senior > $placesRestantes) {
+                $erreur = "Plus assez de places disponibles. Il reste " . $placesRestantes . " places disponibles.";
+            }
+        }
+
+        // Création de la réservation
+        if ($erreur == null) {
+            $moyen_paiement = null;
+            if (isset($_POST['moyen_paiement']) && $_POST['moyen_paiement'] != "") {
+                $moyen_paiement = $_POST['moyen_paiement'];
+            }
+
+            $reservation = new Reservation(
+                null,
+                'en attente',
+                $qte_plein,
+                $qte_etu,
+                $qte_senior,
+                $moyen_paiement,
+                $_POST['ref_seance'],
+                $ref_code,
+                $id_acteur
+            );
+
+            $repRes->ajouterReservation($reservation);
+            $succes = "Réservation effectuée avec succès !";
+        }
+
     }
+
 }
 ?>
 

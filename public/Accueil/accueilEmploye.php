@@ -160,4 +160,4 @@ foreach ($toutesSeances as $s) {
 </div>
 
 </body>
-</html>cre
+</html>
