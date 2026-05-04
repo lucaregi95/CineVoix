@@ -136,28 +136,28 @@ $tabFilm = $rep->getAllFilmTri();
 
     <nav class="navbar navbar-expand-sm navbar-dark border-3" style="background-color: #0d1b4c;">
         <div class="container d-flex justify-content-evenly align-items-center">
-            <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'accueil' || $_SESSION['role'] == 'admin')) { ?>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'accueil'): ?>
                 <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
-            <?php } ?>
-
-            <a class="nav-link text-white" href="accueil.php">Accueil</a>
-
-            <?php if(isset($_SESSION["id"])): ?>
-                <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
-                <a class="nav-link text-white" href="profil.php">Profil</a>
-                <form action="../Acteurs/deconnexionActeur.php">
-                    <button type="submit" class="nav-link text-white border-0 bg-transparent">Déconnexion</button>
-                </form>
-            <?php else: ?>
-                <button type="button" class="nav-link text-white border-0 bg-transparent"
-                        data-bs-toggle="modal" data-bs-target="#modalCompte">
-                    Mes réservations
-                </button>
-                <button type="button" class="nav-link text-white border-0 bg-transparent"
-                        data-bs-toggle="modal" data-bs-target="#modalCompte">
-                    Connexion
-                </button>
             <?php endif; ?>
+            <a class="nav-link text-white" href="accueil.php">Accueil</a>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+                <a class="nav-link text-white" href="../crud.php">Accès aux cruds</a>
+            <?php elseif (!isset($_SESSION['role']) || $_SESSION['role'] == 'user'): ?>
+                <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
+            <?php endif; ?>
+            <a class="nav-link text-white" href="profil.php">Profil</a>
+            <?php if(isset($_SESSION["id"])): ?>
+                <form action="../Acteurs/deconnexionActeur.php">
+                    <button type="submit" class="nav-link text-white">Déconnexion</button>
+                </form>
+            <?php endif; ?>
+
+            <?php if(!isset($_SESSION["id"])): ?>
+                <form action="../Acteurs/connexionActeur2.php">
+                    <button type="submit" class="nav-link text-white">Connexion</button>
+                </form>
+            <?php endif; ?>
+
         </div>
     </nav>
 

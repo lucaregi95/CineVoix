@@ -187,11 +187,15 @@ $modif = $rep->getActeur($id_acteur);
 
 <nav class="navbar navbar-expand-sm navbar-dark border-3" style="background-color: #0d1b4c;">
     <div class="container d-flex justify-content-evenly align-items-center">
-        <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'accueil' || $_SESSION['role'] == 'admin')) { ?>
+        <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'accueil'): ?>
             <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
-        <?php } ?>
+        <?php endif; ?>
         <a class="nav-link text-white" href="accueil.php">Accueil</a>
-        <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
+        <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+            <a class="nav-link text-white" href="../crud.php">Accès aux cruds</a>
+        <?php elseif (!isset($_SESSION['role']) || $_SESSION['role'] == 'user'): ?>
+            <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
+        <?php endif; ?>
         <a class="nav-link text-white" href="profil.php">Profil</a>
         <?php if(isset($_SESSION["id"])): ?>
             <form action="../Acteurs/deconnexionActeur.php">
