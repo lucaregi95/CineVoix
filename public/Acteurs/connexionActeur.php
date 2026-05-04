@@ -174,7 +174,6 @@ $inscription="Pas de compte ? Inscrivez-vous";
                     <label for="email" class="form-label">Adresse e-mail</label>
                     <input type="email" id="email" name="email"
                            class="form-control"
-                           value="<?= htmlspecialchars($email ?? '') ?>"
                            autocomplete="off" required>
                 </div>
 
