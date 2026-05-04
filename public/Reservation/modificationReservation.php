@@ -25,9 +25,9 @@ if (isset($_POST['statut']) && isset($_POST['qte_plein_tarif'])) {
     $reservation = new Reservation(
         $id,
         $_POST['statut'],
-        (int) $_POST['qte_plein_tarif'],
-        (int) $_POST['qte_etudiant'],
-        (int) $_POST['qte_senior'],
+        $_POST['qte_plein_tarif'],
+        $_POST['qte_etudiant'],
+        $_POST['qte_senior'],
         $moyen_paiement,
         $_POST['ref_seance'],
         null,
@@ -39,6 +39,7 @@ if (isset($_POST['statut']) && isset($_POST['qte_plein_tarif'])) {
 }
 
 $o = $rep->getReservation($id);
+
 
 $repSeance = new SeancesRepository();
 $toutesSeances = $repSeance->getAllSeances();
