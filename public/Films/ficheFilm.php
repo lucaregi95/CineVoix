@@ -1,4 +1,6 @@
-<?php
+<a href="tabFilm.php" class="btn-back">
+    <i class="bi bi-arrow-left me-1"></i> Retour
+</a><?php
 require_once "../../src/bdd/Bdd.php";
 require_once "../../src/modele/Film.php";
 require_once "../../src/repository/FilmRepository.php";
