@@ -22,7 +22,7 @@ $rep = new ActeursRepository();
 $result = $rep->connecterActeur($email, $mdp);
 
 if (!$result) {
-    header("Location: connexionActeur.php?erreur=unknown");
+    header("Location: connexionActeur.php?erreur=selem");
     exit();
 } else if ($result['etat']==0){
     header("Location: connexionActeur.php?erreur=bannir");

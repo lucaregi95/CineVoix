@@ -8,7 +8,7 @@ $tabFilm = $rep->getAllFilm();
 ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Cinémoi - Accueil</title>
@@ -47,9 +47,20 @@ $tabFilm = $rep->getAllFilm();
                 <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
             <?php } ?>
             <a class="nav-link text-white" href="accueil.php">Accueil</a>
-            <a class="nav-link text-white" href="">Réservation</a>
             <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
             <a class="nav-link text-white" href="profil.php">Profil</a>
+            <?php if(isset($_SESSION["id"])): ?>
+                <form action="../Acteurs/deconnexionActeur.php">
+                    <button type="submit" class="nav-link text-white">Déconnexion</button>
+                </form>
+            <?php endif; ?>
+
+            <?php if(!isset($_SESSION["id"])): ?>
+                <form action="../Acteurs/connexionActeur2.php">
+                    <button type="submit" class="nav-link text-white">Connexion</button>
+                </form>
+            <?php endif; ?>
+
         </div>
     </nav>
 
@@ -69,7 +80,11 @@ $tabFilm = $rep->getAllFilm();
                             ?>
                             <img src="<?= $affiche ?>" alt="<?= $film->getNom() ?>">
                         <?php } else { ?>
-                            <img src="https://via.placeholder.com/150x220?text=No+Image" alt="<?= $film->getNom() ?>">
+                                <form method="POST" action="../Films/ficheFilm.php?id=<?=$film->getIdFilm()?>">
+                                <button class="btn btn-dark" type="submit">
+                                    <img src="../../img/default.png" alt="<?= $film->getNom() ?>">
+                                </button>
+                                    </form>
                         <?php } ?>
                         <p><?= $film->getNom() ?></p>
                         <a href="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>" class="btn btn-sm btn-outline-light">Info</a>

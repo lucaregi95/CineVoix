@@ -185,12 +185,26 @@ $modif = $rep->getActeur($id_acteur);
 
 <body>
 
-<nav class="navbar navbar-expand-sm">
+<nav class="navbar navbar-expand-sm navbar-dark border-3" style="background-color: #0d1b4c;">
     <div class="container d-flex justify-content-evenly align-items-center">
-        <a class="nav-link" href="accueil.php">Accueil</a>
-        <a class="nav-link" href="forum.php">Réservation</a>
-        <a class="nav-link" href="reservationClient.php">Mes réservations</a>
-        <a class="nav-link" href="profil.php">Profil</a>
+        <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'accueil' || $_SESSION['role'] == 'admin')) { ?>
+            <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
+        <?php } ?>
+        <a class="nav-link text-white" href="accueil.php">Accueil</a>
+        <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
+        <a class="nav-link text-white" href="profil.php">Profil</a>
+        <?php if(isset($_SESSION["id"])): ?>
+            <form action="../Acteurs/deconnexionActeur.php">
+                <button type="submit" class="nav-link text-white">Déconnexion</button>
+            </form>
+        <?php endif; ?>
+
+        <?php if(!isset($_SESSION["id"])): ?>
+            <form action="../Acteurs/connexionActeur2.php">
+                <button type="submit" class="nav-link text-white">Connexion</button>
+            </form>
+        <?php endif; ?>
+
     </div>
 </nav>
 
@@ -241,7 +255,8 @@ $modif = $rep->getActeur($id_acteur);
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Téléphone</label>
-                        <input type="tel" name="tel" class="form-control" value="<?= htmlspecialchars($modif->getTelephone()) ?>">
+
+                        <input type="tel" name="tel" class="form-control" value="<?php if($modif->getTelephone()!=null){ echo htmlspecialchars($modif->getTelephone()) ;} ?>">
                     </div>
                 </div>
 
@@ -251,15 +266,15 @@ $modif = $rep->getActeur($id_acteur);
                 <div class="row g-3 mb-1">
                     <div class="col-12">
                         <label class="form-label">Rue</label>
-                        <input type="text" name="rue" class="form-control" value="<?= htmlspecialchars($modif->getRue()) ?>">
+                        <input type="text" name="rue" class="form-control" value="<?php if($modif->getRue()!=null){ echo htmlspecialchars($modif->getRue());} ?>">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Code postal</label>
-                        <input type="text" name="cp" class="form-control" value="<?= htmlspecialchars($modif->getCp()) ?>" maxlength="6">
+                        <input type="text" name="cp" class="form-control" value="<?php if($modif->getCp()!=null){echo htmlspecialchars($modif->getCp());}?>" maxlength="6">
                     </div>
                     <div class="col-md-8">
                         <label class="form-label">Ville</label>
-                        <input type="text" name="ville" class="form-control" value="<?= htmlspecialchars($modif->getVille()) ?>" required>
+                        <input type="text" name="ville" class="form-control" value="<?php if($modif->getVille()!=null){ echo htmlspecialchars($modif->getVille());} ?>">
                     </div>
                 </div>
 
@@ -269,7 +284,7 @@ $modif = $rep->getActeur($id_acteur);
                 <div class="row g-3 mb-1">
                     <div class="col-md-6">
                         <label class="form-label">Date de naissance</label>
-                        <input type="date" name="date_naissance" class="form-control" value="<?= htmlspecialchars($modif->getDateNaissance()) ?>">
+                        <input type="date" name="date_naissance" class="form-control" value="<?php if($modif->getDateNaissance()!=null){ echo htmlspecialchars($modif->getDateNaissance());} ?>">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Rôle</label>
