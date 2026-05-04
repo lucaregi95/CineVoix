@@ -1,47 +1,88 @@
-
 <?php
+session_start();
 require_once "../../src/traitement/newFilm.php";
 require_once "../../src/repository/FilmRepository.php";
 require_once "../../src/modele/Film.php";
 $rep = new FilmRepository();
-$tabFilm = $rep -> getAllFilmTri();
-
+$tabFilm = $rep->getAllFilm();
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Cinémoi - Liste Films</title>
+    <title>Cinémoi - Accueil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .allo {
+            background: #0b0b0b;
+            font-family: Arial, sans-serif;
+            color: white;
+            min-height: 100vh;
+        }
+        .section { padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; }
+        .header a { color: #ccc; text-decoration: none; font-size: 14px; }
+        .film-list { display: flex; gap: 15px; overflow-x: auto; padding-top: 15px; padding-bottom: 10px; }
+        .film { min-width: 150px; position: relative; flex-shrink: 0; }
+        .film p { margin-top: 8px; font-size: 14px; }
+        .film img {
+            width: 150px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            display: block;
+        }
+        .film:hover img { transform: scale(1.05); }
+    </style>
 </head>
-<body style="background-image: url('https://trentetroisdegres.fr/wp-content/uploads/2020/03/89487910_872539006520884_553622057548513280_n.jpg');background-size: 100% 100%;background-repeat: no-repeat;
-  background-attachment: fixed;">
+<body>
+<section class="allo">
 
-<nav class="navbar navbar-expand-sm navbar-light bg-light border border-danger border-3">
-    <div class="container d-flex justify-content-evenly align-items-center">
+    <nav class="navbar navbar-expand-sm navbar-dark border-3" style="background-color: #0d1b4c;">
+        <div class="container d-flex justify-content-evenly align-items-center">
+            <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'accueil' || $_SESSION['role'] == 'admin')) { ?>
+                <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
+            <?php } ?>
+            <a class="nav-link text-white" href="accueil.php">Accueil</a>
+            <a class="nav-link text-white" href="">Réservation</a>
+            <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
+            <a class="nav-link text-white" href="profil.php">Profil</a>
+        </div>
+    </nav>
 
-        <a class="nav-link" href="specialistes.php">Spécialistes</a>
-        <a class="nav-link" href="forum.php">Forum</a>
-        <a class="nav-link" href="aides.php">Aides</a>
-        <a class="nav-link" href="presentation.php">Handicaps</a>
+    <div class="section">
+        <div class="header">
+            <h2>Films au cinéma</h2>
+            <a href="#">Tous les films actuellement au cinéma ></a>
+        </div>
 
+        <div class="film-list">
+            <?php if (!empty($tabFilm)) { ?>
+                <?php foreach ($tabFilm as $film) { ?>
+                    <div class="film">
+                        <?php
+                        $affiche = $film->getAffiche();
+                        if ($affiche != null && $affiche != "") {
+                            ?>
+                            <img src="<?= $affiche ?>" alt="<?= $film->getNom() ?>">
+                        <?php } else { ?>
+                            <img src="https://via.placeholder.com/150x220?text=No+Image" alt="<?= $film->getNom() ?>">
+                        <?php } ?>
+                        <p><?= $film->getNom() ?></p>
+                        <a href="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>" class="btn btn-sm btn-outline-light">Info</a>
+                    </div>
+                <?php } ?>
+            <?php } else { ?>
+                <p>Aucun film pour le moment...</p>
+            <?php } ?>
+        </div>
     </div>
-</nav>
-<?php
 
-if(!empty($tabFilm)){
+    <a href="../crud.php" style="color:#ccc; margin: 0 20px;">Retour aux cruds</a>
 
-
-    ?>
-    <
-    <a href="../crud.php">Retour aux cruds</a>
-<?php }
-else{?>
-    <h4>Aucun film pour le moment...</h4>
-    <a href="../crud.php">Retour aux cruds</a>
-<?php }?>
-
+</section>
 </body>
 </html>

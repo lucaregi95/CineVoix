@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf4715fa-0228-4792-a0c5-2d70d639a770" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/client/accueil.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Films/ajoutFilm.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/Films/ajoutFilm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Films/tabFilm.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/Films/tabFilm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Reservation/tabReservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/Reservation/tabReservation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/crud.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/crud.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/FilmRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/FilmRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/client/accueil.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/client/accueil.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,6 +102,7 @@
       <workItem from="1776024693353" duration="6845000" />
       <workItem from="1776069842971" duration="14794000" />
       <workItem from="1776426315371" duration="3489000" />
+      <workItem from="1776429872043" duration="4262000" />
     </task>
     <servers />
   </component>

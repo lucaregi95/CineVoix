@@ -35,7 +35,7 @@ if(isset($film)){
             </div>
             <div class="mb-3">
                 <label>Affiche :</label>
-                <input type="file" name="affiche">
+                <input type="url" name="affiche">
             </div>
             <div class="mb-3">
                 <label>Genre :</label>

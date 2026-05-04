@@ -77,10 +77,9 @@ class ActeursRepository{
 
     public function connecterActeur($email, $mdp)
     {
-        $sql = "SELECT * FROM acteurs WHERE email = :email AND mdp = :mdp";
+        $sql = "SELECT * FROM acteurs WHERE email = :email";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':email', $email);
-        $req->bindValue(':mdp', $mdp);
         $req->execute();
         return $req->fetch();
     }

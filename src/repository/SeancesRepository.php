@@ -45,7 +45,6 @@ class SeancesRepository
         $req->bindValue(':date_seance', $seance->getDateSeance());
         $req->bindValue(':id_seance', $seance->getIdSeance());
         $req->execute();
-        return $req->execute();
     }
 
     public function supprimerSeance(Seances $seance){

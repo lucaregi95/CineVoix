@@ -34,6 +34,12 @@ $films = $rep2 -> getAllFilm();
 
 $rep3 = new SalleRepository();
 $salles = $rep3 -> getAllSalle();
+$sallesActives = array();
+foreach($salles as $salle){
+    if($salle -> getEtat() == "1"){
+        $sallesActives[] = $salle;
+    }
+}
 
 
 $date = new DateTimeImmutable();
@@ -45,7 +51,7 @@ $dateMin = $date->format('Y-m-d');
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Cinémoi - Accueil</title>
+    <title>Cinémoi - Ajout seances</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
 <body>
