@@ -4,7 +4,7 @@ require_once "../../src/traitement/newFilm.php";
 require_once "../../src/repository/FilmRepository.php";
 require_once "../../src/modele/Film.php";
 $rep = new FilmRepository();
-$tabFilm = $rep->getAllFilm();
+$tabFilm = $rep->getAllFilmTri();
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +24,43 @@ $tabFilm = $rep->getAllFilm();
         .section { padding: 20px; }
         .header { display: flex; justify-content: space-between; align-items: center; }
         .header a { color: #ccc; text-decoration: none; font-size: 14px; }
-        .film-list { display: flex; gap: 15px; overflow-x: auto; padding-top: 15px; padding-bottom: 10px; }
+
+        .carousel-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 40%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .carousel-btn:hover { background: rgba(229,9,20,0.85); }
+        .carousel-btn.left { left: 5px; }
+        .carousel-btn.right { right: 5px; }
+
+        .film-list {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 15px 10px 10px 10px;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+        .film-list::-webkit-scrollbar { display: none; }
+
         .film { min-width: 150px; position: relative; flex-shrink: 0; }
         .film p { margin-top: 8px; font-size: 14px; }
         .film img {
@@ -36,6 +72,12 @@ $tabFilm = $rep->getAllFilm();
             display: block;
         }
         .film:hover img { transform: scale(1.05); }
+
+        .modal-title {
+            margin-bottom: 0;
+            color: black;
+        }
+
         .hero-banner {
             position: relative;
             width: 100%;
@@ -97,34 +139,61 @@ $tabFilm = $rep->getAllFilm();
             <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'accueil' || $_SESSION['role'] == 'admin')) { ?>
                 <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
             <?php } ?>
+
             <a class="nav-link text-white" href="accueil.php">Accueil</a>
-            <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
-            <a class="nav-link text-white" href="profil.php">Profil</a>
+
             <?php if(isset($_SESSION["id"])): ?>
+                <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
+                <a class="nav-link text-white" href="profil.php">Profil</a>
                 <form action="../Acteurs/deconnexionActeur.php">
-                    <button type="submit" class="nav-link text-white">Déconnexion</button>
+                    <button type="submit" class="nav-link text-white border-0 bg-transparent">Déconnexion</button>
                 </form>
+            <?php else: ?>
+                <button type="button" class="nav-link text-white border-0 bg-transparent"
+                        data-bs-toggle="modal" data-bs-target="#modalCompte">
+                    Mes réservations
+                </button>
+                <button type="button" class="nav-link text-white border-0 bg-transparent"
+                        data-bs-toggle="modal" data-bs-target="#modalCompte">
+                    Connexion
+                </button>
             <?php endif; ?>
-
-            <?php if(!isset($_SESSION["id"])): ?>
-                <form action="../Acteurs/connexionActeur2.php">
-                    <button type="submit" class="nav-link text-white">Connexion</button>
-                </form>
-            <?php endif; ?>
-
         </div>
     </nav>
 
+    <div class="modal fade" id="modalCompte" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 p-2">
+
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title w-100 text-center fw-semibold">Mon compte</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body px-4 pb-4">
+                    <a href="../Acteurs/connexionActeur.php" class="btn w-100 fw-semibold py-3 mb-2"
+                       style="background:#0d1b4c; color:#cccccc; border-radius:12px;">
+                        Me connecter
+                    </a>
+                    <a href="../Acteurs/inscriptionActeur.php" class="btn btn-outline-secondary w-100 py-3"
+                       style="border-radius:12px; color: black ">
+                        Créer mon compte
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <?php
     $filmVogue = $rep->getFilmEnVogue();
-    if(isset($filmVogue)){ ?>
+    if (isset($filmVogue)) { ?>
         <div class="hero-banner">
-            <?php if($filmVogue->getBanniere()!=null){?>
-                <img src="<?php echo $filmVogue->getBanniere()?>" alt="banniere">
-            <?php }else{?>
+            <?php if ($filmVogue->getBanniere() != null) { ?>
+                <img src="<?php echo $filmVogue->getBanniere() ?>" alt="banniere">
+            <?php } else { ?>
                 <img src="../../img/default.png" alt="banniere">
-            <?php }?>
-
+            <?php } ?>
             <div class="hero-gradient"></div>
             <span class="hero-badge">🔥 En ce moment</span>
             <div class="hero-content">
@@ -141,42 +210,47 @@ $tabFilm = $rep->getAllFilm();
     <div class="section">
         <div class="header">
             <h2>Films au cinéma</h2>
-            <a href="allFilms.php" class="btn btn-danger">Tous les films actuellement au cinéma </a>
+            <a href="allFilms.php" class="btn btn-danger">Tous les films actuellement au cinéma</a>
         </div>
 
-        <div class="film-list">
-            <?php if (!empty($tabFilm)) { ?>
-                <?php foreach ($tabFilm as $film) { ?>
-                    <div class="film">
-                        <?php
-                        $affiche = $film->getAffiche();
-                        if ($affiche != null && $affiche != "") {
-                            ?>
-                            <form method="POST" action="../Films/ficheFilm.php?id=<?=$film->getIdFilm()?>">
-                                <button class="btn btn-dark" type="submit">
-                                    <img src="<?= $affiche ?>" alt="<?= $film->getNom() ?>">
-                                </button>
-                            </form>
+        <div class="carousel-wrapper">
+            <button class="carousel-btn left" onclick="document.querySelector('.film-list').scrollBy({left: -500, behavior: 'smooth'})">‹</button>
 
-                        <?php } else { ?>
-                                <form method="POST" action="../Films/ficheFilm.php?id=<?=$film->getIdFilm()?>">
-                                <button class="btn btn-dark" type="submit">
-                                    <img src="../../img/default.png" alt="<?= $film->getNom()?>">
-                                </button>
-                                    </form>
-                        <?php } ?>
-                        <p><?= $film->getNom() ?></p>
-                        <a href="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>" class="btn btn-sm btn-outline-light">Info</a>
-                    </div>
+            <div class="film-list">
+                <?php if (!empty($tabFilm)) { ?>
+                    <?php foreach ($tabFilm as $film) { ?>
+                        <div class="film">
+                            <?php
+                            $affiche = $film->getAffiche();
+                            if ($affiche != null && $affiche != "") { ?>
+                                <form method="POST" action="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>">
+                                    <button class="btn btn-dark" type="submit">
+                                        <img src="<?= $affiche ?>" alt="<?= $film->getNom() ?>">
+                                    </button>
+                                </form>
+                            <?php } else { ?>
+                                <form method="POST" action="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>">
+                                    <button class="btn btn-dark" type="submit">
+                                        <img src="../../img/default.png" alt="<?= $film->getNom() ?>">
+                                    </button>
+                                </form>
+                            <?php } ?>
+                            <p><?= $film->getNom() ?></p>
+                            <a href="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>" class="btn btn-sm btn-outline-light">Info</a>
+                        </div>
+                    <?php } ?>
+                <?php } else { ?>
+                    <p>Aucun film pour le moment...</p>
                 <?php } ?>
-            <?php } else { ?>
-                <p>Aucun film pour le moment...</p>
-            <?php } ?>
+            </div>
+
+            <button class="carousel-btn right" onclick="document.querySelector('.film-list').scrollBy({left: 500, behavior: 'smooth'})">›</button>
         </div>
     </div>
 
     <a href="../crud.php" style="color:#ccc; margin: 0 20px;">Retour aux cruds</a>
 
 </section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

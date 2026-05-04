@@ -24,8 +24,19 @@ $tabFilm = $rep->getAllFilm();
         .section { padding: 20px; }
         .header { display: flex; justify-content: space-between; align-items: center; }
         .header a { color: #ccc; text-decoration: none; font-size: 14px; }
-        .film-list { display: flex; gap: 15px; overflow-x: auto; padding-top: 15px; padding-bottom: 10px; }
-        .film { min-width: 150px; position: relative; flex-shrink: 0; }
+        .film-list {
+            display: flex;
+            flex-wrap: wrap; /* ← retour à la ligne */
+            gap: 15px;
+            padding-top: 15px;
+            padding-bottom: 10px;
+            /* supprime overflow-x: auto */
+        }
+        .film {
+            min-width: 150px;
+            position: relative;
+            /* supprime flex-shrink: 0 */
+        }
         .film p { margin-top: 8px; font-size: 14px; }
         .film img {
             width: 150px;

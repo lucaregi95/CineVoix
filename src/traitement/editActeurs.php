@@ -1,9 +1,9 @@
-<?php
+<?php /*
 require_once __DIR__ . '/../../src/bdd/Bdd.php';
 require_once __DIR__ . '/../../src/modele/Acteurs.php';
 
 
-if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && isset($_POST['mdp'])){ /*&& isset($_POST['tel']) && isset($_POST['rue']) && isset($_POST['cp']) && isset($_POST['ville']) && isset($_POST['date_naissance'])) */
+if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && isset($_POST['mdp'])){ /*&& isset($_POST['tel']) && isset($_POST['rue']) && isset($_POST['cp']) && isset($_POST['ville']) && isset($_POST['date_naissance']))
     $id_acteur = (isset($_POST['id_acteur'])) ? $_POST['id_acteur'] : null;
     $tel=(isset($_POST['tel']))&&($_POST['tel']!="")?$_POST['tel']:null;
     $rue = (isset($_POST['rue']))&&($_POST['rue']!="")?$_POST['rue']:null;
@@ -18,8 +18,13 @@ if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && 
 
         // comme le fichier sert a la fois pour l'ajout ET la modif, ca evite de re hasher un mdp deja hasher
     }
-    $acteur = new Acteurs($id_acteur, $_POST['nom'], $_POST['prenom'], $_POST['email'], $mdp, $date_naissance, $tel, $rue, $ville, $cp, $role, $etat);
+    $acteur = new Acteurs($_SESSION["id_Acteur"], $_POST['nom'], $_POST['prenom'], $_POST['email'], $mdp, $date_naissance, $tel, $rue, $ville, $cp, $role, $etat);
+    if (isset($acteur)){
+        $rep = new ActeursRepository();
+        $rep -> modifierActeur($acteur);
+        header("Location:connexionActeur.php");
+        exit();
+    }
 
-
-}
+}*/
 ?>

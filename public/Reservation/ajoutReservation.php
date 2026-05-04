@@ -205,15 +205,15 @@ if (!isset($_SESSION['id'])) {
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Places plein tarif</label>
+                    <label class="form-label">Places plein tarif (15 €)</label>
                     <input type="number" name="qte_plein_tarif" class="form-control" min="0" value="0">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Places étudiant</label>
+                    <label class="form-label">Places étudiant (10 €)</label>
                     <input type="number" name="qte_etudiant" class="form-control" min="0" value="0">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Places senior</label>
+                    <label class="form-label">Places senior (5 €)</label>
                     <input type="number" name="qte_senior" class="form-control" min="0" value="0">
                 </div>
                 <!--
