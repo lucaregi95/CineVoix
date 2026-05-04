@@ -6,6 +6,6 @@ $_SESSION = [];
 
 session_destroy();
 
-header("Location: "); //definir ou est l'acceuil
+header("Location: ../client/accueil.php");
 exit;
 ?>
