@@ -10,6 +10,8 @@ require_once "../../src/modele/Film.php";
 require_once "../../src/repository/FilmRepository.php";
 require_once "../../src/modele/CodePromo.php";
 require_once "../../src/repository/CodePromoRepository.php";
+require_once "../../src/modele/Salle.php";
+require_once "../../src/repository/SalleRepository.php";
 
 if (!isset($_SESSION['id'])) {
     header("Location: ../Acteurs/connexionActeur.php");
@@ -24,6 +26,7 @@ if (!isset($_GET['id'])) {
 $id = $_GET['id'];
 $repRes = new ReservationRepository();
 $reservation = $repRes->getReservation($id);
+$ref_seance=$reservation->getRefSeance();
 
 if ($reservation->getRefActeur() != $_SESSION['id']) {
     header("Location: reservationClient.php");
@@ -56,6 +59,18 @@ if (isset($_POST['confirmer'])) {
     if ($qte_plein + $qte_etu + $qte_senior == 0) {
         $erreur = "Veuillez sélectionner au moins une place.";
     } else {
+
+        if ($erreur == null) {
+            $repSeance = new SeancesRepository();
+            $seanceChoisie = $repSeance->getSeances($reservation->getRefSeance());
+            $repSalle = new SalleRepository();
+            $salle = $repSalle->getSalle($seanceChoisie->getRefSalle());
+            $placesDejaReservees = $repRes->getNombrePlacesReservees($ref_seance);
+            $placesRestantes = $salle->getCapacite() - $placesDejaReservees;
+            if ($qte_plein + $qte_etu + $qte_senior - $placesDejaReservees  > $placesRestantes) {
+                $erreur = "Plus assez de places disponibles. Il reste " . $placesRestantes . " places disponibles.";
+            }
+        }
 
         // Code promo
         $ref_code = null;
@@ -174,29 +189,26 @@ if (isset($_POST['confirmer'])) {
 
         <div class="mb-3">
             <label class="form-label">Places plein tarif</label>
-            <input type="number" name="qte_plein_tarif" class="form-control" min="0" value="<?= $reservation->getQtePleinTarif() ?>">
+            <input type="number" name="qte_plein_tarif" id="qte_plein_tarif" class="form-control" min="0" value="<?= $reservation->getQtePleinTarif() ?>">
         </div>
         <div class="mb-3">
             <label class="form-label">Places étudiant</label>
-            <input type="number" name="qte_etudiant" class="form-control" min="0" value="<?= $reservation->getQteEtudiant() ?>">
+            <input type="number" name="qte_etudiant" id="qte_etudiant" class="form-control" min="0" value="<?= $reservation->getQteEtudiant() ?>">
         </div>
         <div class="mb-3">
             <label class="form-label">Places senior</label>
-            <input type="number" name="qte_senior" class="form-control" min="0" value="<?= $reservation->getQteSenior() ?>">
+            <input type="number" name="qte_senior" id="qte_senior" class="form-control" min="0" value="<?= $reservation->getQteSenior() ?>">
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Moyen de paiement</label>
-            <select name="moyen_paiement" class="form-select">
-                <option value="carte" <?php if ($reservation->getMoyenPaiement() == "carte") { echo "selected"; } ?>>Carte bancaire</option>
-                <option value="especes" <?php if ($reservation->getMoyenPaiement() == "especes") { echo "selected"; } ?>>Espèces</option>
-                <option value="cheque" <?php if ($reservation->getMoyenPaiement() == "cheque") { echo "selected"; } ?>>Chèque</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Code promo (facultatif)</label>
-            <input type="text" name="code_promo" class="form-control" placeholder="Ex : PROMO10">
+        <div id="panier" style="background:#1a1a1a; border:1px solid #444; border-radius:8px; padding:16px; margin-top:16px; display:none;">
+            <div style="color:#e50914; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:12px; font-weight:bold;">
+                🎟 Récapitulatif
+            </div>
+            <div id="panier-lignes"></div>
+            <div id="panier-total" style="display:none; justify-content:space-between; font-size:1rem; font-weight:bold; color:white; margin-top:10px; padding-top:10px; border-top:1px solid #e50914;">
+                <span>Total</span>
+                <span id="panier-montant">0 €</span>
+            </div>
         </div>
 
         <div class="d-flex gap-2 justify-content-end mt-3">
@@ -207,6 +219,57 @@ if (isset($_POST['confirmer'])) {
     </form>
 
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var tarifs = [
+            { id: 'qte_plein_tarif', label: 'Plein tarif', prix: 15 },
+            { id: 'qte_etudiant',    label: 'Étudiant',    prix: 10 },
+            { id: 'qte_senior',      label: 'Senior',       prix: 5  }
+        ];
+
+        function majPanier() {
+            var total = 0;
+            var html = '';
+
+            tarifs.forEach(function (t) {
+                var el = document.getElementById(t.id);
+                var qte = el ? (parseInt(el.value) || 0) : 0;
+                if (qte > 0) {
+                    var sous = qte * t.prix;
+                    total += sous;
+                    html += '<div style="display:flex; justify-content:space-between; font-size:0.9rem; color:#ccc; padding:6px 0; border-bottom:1px solid #2a2a2a;">'
+                        + '<span>' + qte + ' × ' + t.label + ' (' + t.prix + ' €)</span>'
+                        + '<span>' + sous + ' €</span>'
+                        + '</div>';
+                }
+            });
+
+            var panier     = document.getElementById('panier');
+            var lignesDiv  = document.getElementById('panier-lignes');
+            var totalDiv   = document.getElementById('panier-total');
+            var montantEl  = document.getElementById('panier-montant');
+
+            if (html === '') {
+                panier.style.display = 'none';
+                totalDiv.style.display = 'none';
+            } else {
+                panier.style.display = 'block';
+                lignesDiv.innerHTML = html;
+                totalDiv.style.display = 'flex';
+                montantEl.textContent = total + ' €';
+            }
+        }
+
+        tarifs.forEach(function (t) {
+            var el = document.getElementById(t.id);
+            if (el) {
+                el.addEventListener('input', majPanier);
+                el.addEventListener('change', majPanier);
+            }
+        });
+        majPanier()
+    });
+</script>
 
 </body>
 </html>

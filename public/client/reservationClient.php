@@ -116,6 +116,7 @@ $repFilm = new FilmRepository();
                                 <a href="../Reservation/suppressionReservation.php?id=<?= $reservation->getIdReservation() ?>" class="btn btn-sm btn-outline-danger">Annuler</a>
                             </div>
                         <?php } ?>
+
                         <div class="card-body">
 
                             <div class="d-flex gap-3 align-items-start">
@@ -149,8 +150,15 @@ $repFilm = new FilmRepository();
                             </div>
 
                             <div class="info-label">Paiement</div>
-                            <div><?= $reservation->getMoyenPaiement() ?></div>
+                            <?php if ($peutModifier) { ?>
+                                <hr style="border-color:#333; ">
 
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="modificationReservationClient.php?id=<?=$reservation->getIdReservation() ?>" class="btn btn-sm btn-outline-light">Modifier</a>
+                                <a href="../Reservation/suppressionReservation.php?id=<?= $reservation->getIdReservation() ?>" class="btn btn-sm btn-outline-danger">Annuler</a>
+                            </div>
+                            <div><?= $reservation->getMoyenPaiement() ?></div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

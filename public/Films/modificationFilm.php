@@ -198,7 +198,7 @@ $heureFormattee = sprintf('%02d:%02d', $heures, $minutes);
                            value="<?= htmlspecialchars($o->getBandeAnnonce()) ?>">
                 </div>
             </div>
-            
+
             <div class="d-flex gap-2 justify-content-end pt-2">
                 <a href="tabFilm.php" class="btn-back">
                     <i class="bi bi-arrow-left me-1"></i> Retour
