@@ -7,8 +7,10 @@ require_once "../../src/repository/SeancesRepository.php";
 
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
+
 } else if (isset($_GET['id'])) {
     $id = $_GET['id'];
+    var_dump($id);
 } else {
     header("Location: tabReservation.php");
     exit();
@@ -55,9 +57,11 @@ $toutesSeances = $repSeance->getAllSeances();
 <body>
 <form action="modificationReservation.php" method="post">
 
+    <?php var_dump($o); ?>
     <div class="mb-3">
         <label>Statut :</label>
         <select name="statut">
+
             <option value="en attente" <?php if ($o->getStatut() == "en attente") { echo "selected"; } ?>>En attente</option>
             <option value="confirmee" <?php if ($o->getStatut() == "confirmee") { echo "selected"; } ?>>Confirmée</option>
             <option value="annulee" <?php if ($o->getStatut() == "annulee") { echo "selected"; } ?>>Annulée</option>
