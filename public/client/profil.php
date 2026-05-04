@@ -241,7 +241,8 @@ $modif = $rep->getActeur($id_acteur);
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Téléphone</label>
-                        <input type="tel" name="tel" class="form-control" value="<?= htmlspecialchars($modif->getTelephone()) ?>">
+
+                        <input type="tel" name="tel" class="form-control" value="<?php if($modif->getTelephone()!=null){ echo htmlspecialchars($modif->getTelephone()) ;} ?>">
                     </div>
                 </div>
 
@@ -251,15 +252,15 @@ $modif = $rep->getActeur($id_acteur);
                 <div class="row g-3 mb-1">
                     <div class="col-12">
                         <label class="form-label">Rue</label>
-                        <input type="text" name="rue" class="form-control" value="<?= htmlspecialchars($modif->getRue()) ?>">
+                        <input type="text" name="rue" class="form-control" value="<?php if($modif->getRue()!=null){ echo htmlspecialchars($modif->getRue());} ?>">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Code postal</label>
-                        <input type="text" name="cp" class="form-control" value="<?= htmlspecialchars($modif->getCp()) ?>" maxlength="6">
+                        <input type="text" name="cp" class="form-control" value="<?php if($modif->getCp()!=null){echo htmlspecialchars($modif->getCp());}?>" maxlength="6">
                     </div>
                     <div class="col-md-8">
                         <label class="form-label">Ville</label>
-                        <input type="text" name="ville" class="form-control" value="<?= htmlspecialchars($modif->getVille()) ?>" required>
+                        <input type="text" name="ville" class="form-control" value="<?php if($modif->getVille()!=null){ echo htmlspecialchars($modif->getVille());} ?>">
                     </div>
                 </div>
 
@@ -269,7 +270,7 @@ $modif = $rep->getActeur($id_acteur);
                 <div class="row g-3 mb-1">
                     <div class="col-md-6">
                         <label class="form-label">Date de naissance</label>
-                        <input type="date" name="date_naissance" class="form-control" value="<?= htmlspecialchars($modif->getDateNaissance()) ?>">
+                        <input type="date" name="date_naissance" class="form-control" value="<?php if($modif->getDateNaissance()!=null){ echo htmlspecialchars($modif->getDateNaissance());} ?>">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Rôle</label>

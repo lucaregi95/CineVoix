@@ -72,7 +72,7 @@ if (isset($_POST['ref_seance'])) {
 
         if ($erreur == null) {
             $repRes = new ReservationRepository();
-            $dejaReserve = $repRes->getReservationByActeurAndSeance($id_acteur, $_POST['ref_seance']);
+            $dejaReserve = $repRes->getReservationByActeurEtSeance($id_acteur, $_POST['ref_seance']);
             if ($dejaReserve) {
                 $erreur = "Vous avez déjà une réservation pour cette séance.";
             }
