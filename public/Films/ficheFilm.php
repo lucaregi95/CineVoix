@@ -33,9 +33,11 @@ $film = $rep->getFilm($id);
 <body>
 <nav class="navbar navbar-expand-sm navbar-dark border-3" style="background-color: #0d1b4c;">
     <div class="container d-flex justify-content-evenly align-items-center">
-        <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'accueil' || $_SESSION['role'] == 'admin')) { ?>
+        <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'accueil')) { ?>
             <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
-        <?php } ?>
+        <?php } elseif (isset($_SESSION['role']) && ($_SESSION['role'] == 'admin')) { ?>
+            <a class="nav-link text-white" href="../AccesAdmin/accesAdmin.php"> Accès Admin </a>
+        <?php  } ?>
         <a class="nav-link text-white" href="../client/accueil.php">Accueil</a>
         <a class="nav-link text-white" href="../client/reservationClient.php">Mes réservations</a>
         <a class="nav-link text-white" href="../client/profil.php">Profil</a>

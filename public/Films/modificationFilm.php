@@ -143,8 +143,6 @@ $heureFormattee = sprintf('%02d:%02d', $heures, $minutes);
     <div class="form-card">
         <form action="modificationFilm.php" method="post">
             <input type="hidden" name="id_film" value="<?= $id_film ?>">
-
-            <!-- INFOS PRINCIPALES -->
             <p class="section-title"><i class="bi bi-info-circle me-1"></i>Informations principales</p>
             <div class="row g-3 mb-4">
                 <div class="col-12">
@@ -168,7 +166,6 @@ $heureFormattee = sprintf('%02d:%02d', $heures, $minutes);
                 </div>
             </div>
 
-            <!-- DÉTAILS -->
             <p class="section-title"><i class="bi bi-sliders me-1"></i>Détails</p>
             <div class="row g-3 mb-4">
                 <div class="col-md-4">
@@ -188,7 +185,6 @@ $heureFormattee = sprintf('%02d:%02d', $heures, $minutes);
                 </div>
             </div>
 
-            <!-- MÉDIAS -->
             <p class="section-title"><i class="bi bi-images me-1"></i>Médias</p>
             <div class="row g-3 mb-4">
                 <div class="col-12">
@@ -202,8 +198,7 @@ $heureFormattee = sprintf('%02d:%02d', $heures, $minutes);
                            value="<?= htmlspecialchars($o->getBandeAnnonce()) ?>">
                 </div>
             </div>
-
-            <!-- ACTIONS -->
+            
             <div class="d-flex gap-2 justify-content-end pt-2">
                 <a href="tabFilm.php" class="btn-back">
                     <i class="bi bi-arrow-left me-1"></i> Retour

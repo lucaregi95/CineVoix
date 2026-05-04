@@ -18,7 +18,7 @@ $tabFilm = $rep -> getAllFilm();
         :root {
             --main-blue: #0d1b4c;
             --main-blue-light: #1d3b8b;
-            --accent: #0935e5;
+            --accent: #e5092a;
         }
 
         body {

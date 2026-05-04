@@ -127,7 +127,7 @@ $tabFilm = $rep->getAllFilm();
         </div>
     </div>
 
-    <a href="../crud.php" style="color:#ccc; margin: 0 20px;">Retour aux cruds</a>
+    <a href="../AccesAdmin/accesAdmin.php" style="color:#ccc; margin: 0 20px;">Retour aux cruds</a>
 
 </section>
 <script>

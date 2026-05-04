@@ -141,7 +141,7 @@ $tabFilm = $rep->getAllFilmTri();
             <?php endif; ?>
             <a class="nav-link text-white" href="accueil.php">Accueil</a>
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-                <a class="nav-link text-white" href="../crud.php">Accès Admin</a>
+                <a class="nav-link text-white" href="../AccesAdmin/accesAdmin.php">Accès Admin</a>
             <?php elseif (!isset($_SESSION['role']) || $_SESSION['role'] == 'user'): ?>
                 <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
             <?php endif; ?>

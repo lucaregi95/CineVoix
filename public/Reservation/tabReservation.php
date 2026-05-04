@@ -96,6 +96,6 @@ $rep6 = new CodePromoRepository();
     </tbody>
     <?php } ?>
 </table>
-<a href="../crud.php">Retour aux cruds</a>
+<a href="../AccesAdmin/accesAdmin.php">Retour aux cruds</a>
 </body>
 </html>

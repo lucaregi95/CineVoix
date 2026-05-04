@@ -75,14 +75,14 @@ if($tabActeur!=0){
     </tbody>
     <?php } ?>
 </table>
-    <a href="../crud.php">Retour aux cruds</a>
+    <a href="../AccesAdmin/accesAdmin.php">Retour aux cruds</a>
 <?php }
 else{?>
     <h4>Aucun inscrit pour le moment...</h4>
     <form method="post" action="ajoutActeur.php">
     <button type="submit">Cliquez ici pour en ajoutez un !</button>
     </form>
-    <a href="../crud.php">Retour aux cruds</a>
+    <a href="../AccesAdmin/accesAdmin.php">Retour aux cruds</a>
 <?php }?>
 
 </body>
