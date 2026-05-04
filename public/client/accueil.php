@@ -25,14 +25,13 @@ $tabFilm = $rep->getAllFilmTri();
         .header { display: flex; justify-content: space-between; align-items: center; }
         .header a { color: #ccc; text-decoration: none; font-size: 14px; }
 
-        /* Carousel */
         .carousel-wrapper {
             position: relative;
-            overflow: hidden; /* ← les flèches restent dans le cadre */
+            overflow: hidden;
         }
         .carousel-btn {
             position: absolute;
-            top: 40%; /* ← centré sur l'image (pas sur toute la carte) */
+            top: 40%;
             transform: translateY(-50%);
             z-index: 10;
             background: rgba(0,0,0,0.7);
@@ -49,14 +48,14 @@ $tabFilm = $rep->getAllFilmTri();
             transition: background 0.2s;
         }
         .carousel-btn:hover { background: rgba(229,9,20,0.85); }
-        .carousel-btn.left { left: 5px; } /* ← sur le film, pas à côté */
+        .carousel-btn.left { left: 5px; }
         .carousel-btn.right { right: 5px; }
 
         .film-list {
             display: flex;
             gap: 15px;
             overflow-x: auto;
-            padding: 15px 10px 10px 10px; /* ← plus de padding latéral large */
+            padding: 15px 10px 10px 10px;
             scroll-behavior: smooth;
             scrollbar-width: none;
         }
@@ -74,7 +73,11 @@ $tabFilm = $rep->getAllFilmTri();
         }
         .film:hover img { transform: scale(1.05); }
 
-        /* Hero banner */
+        .modal-title {
+            margin-bottom: 0;
+            color: black;
+        }
+
         .hero-banner {
             position: relative;
             width: 100%;
@@ -136,21 +139,51 @@ $tabFilm = $rep->getAllFilmTri();
             <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'accueil' || $_SESSION['role'] == 'admin')) { ?>
                 <a class="nav-link text-white" href="../Accueil/accueilEmploye.php">Espace Accueil</a>
             <?php } ?>
+
             <a class="nav-link text-white" href="accueil.php">Accueil</a>
-            <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
-            <a class="nav-link text-white" href="profil.php">Profil</a>
+
             <?php if(isset($_SESSION["id"])): ?>
+                <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
+                <a class="nav-link text-white" href="profil.php">Profil</a>
                 <form action="../Acteurs/deconnexionActeur.php">
-                    <button type="submit" class="nav-link text-white">Déconnexion</button>
+                    <button type="submit" class="nav-link text-white border-0 bg-transparent">Déconnexion</button>
                 </form>
-            <?php endif; ?>
-            <?php if(!isset($_SESSION["id"])): ?>
-                <form action="../Acteurs/connexionActeur2.php">
-                    <button type="submit" class="nav-link text-white">Connexion</button>
-                </form>
+            <?php else: ?>
+                <button type="button" class="nav-link text-white border-0 bg-transparent"
+                        data-bs-toggle="modal" data-bs-target="#modalCompte">
+                    Mes réservations
+                </button>
+                <button type="button" class="nav-link text-white border-0 bg-transparent"
+                        data-bs-toggle="modal" data-bs-target="#modalCompte">
+                    Connexion
+                </button>
             <?php endif; ?>
         </div>
     </nav>
+
+    <div class="modal fade" id="modalCompte" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 p-2">
+
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title w-100 text-center fw-semibold">Mon compte</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body px-4 pb-4">
+                    <a href="../Acteurs/connexionActeur.php" class="btn w-100 fw-semibold py-3 mb-2"
+                       style="background:#0d1b4c; color:#cccccc; border-radius:12px;">
+                        Me connecter
+                    </a>
+                    <a href="../Acteurs/inscriptionActeur.php" class="btn btn-outline-secondary w-100 py-3"
+                       style="border-radius:12px; color: black ">
+                        Créer mon compte
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <?php
     $filmVogue = $rep->getFilmEnVogue();
@@ -218,5 +251,6 @@ $tabFilm = $rep->getAllFilmTri();
     <a href="../crud.php" style="color:#ccc; margin: 0 20px;">Retour aux cruds</a>
 
 </section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
