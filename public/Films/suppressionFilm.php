@@ -2,8 +2,11 @@
 
 require_once "../../src/traitement/newFilm.php";
 require_once "../../src/repository/FilmRepository.php";
-$id=$_POST["id"];
-
+if (isset($_POST["id"])) {
+    $id = $_POST["id"];
+} else {
+    $id = $_GET["id"];
+}
 
 $rep=new FilmRepository();
 $rep2=$rep->getFilm($id);
