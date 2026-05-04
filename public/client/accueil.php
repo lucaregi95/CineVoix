@@ -24,7 +24,44 @@ $tabFilm = $rep->getAllFilm();
         .section { padding: 20px; }
         .header { display: flex; justify-content: space-between; align-items: center; }
         .header a { color: #ccc; text-decoration: none; font-size: 14px; }
-        .film-list { display: flex; gap: 15px; overflow-x: auto; padding-top: 15px; padding-bottom: 10px; }
+
+        /* Carousel */
+        .carousel-wrapper {
+            position: relative;
+            overflow: hidden; /* ← les flèches restent dans le cadre */
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 40%; /* ← centré sur l'image (pas sur toute la carte) */
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .carousel-btn:hover { background: rgba(229,9,20,0.85); }
+        .carousel-btn.left { left: 5px; } /* ← sur le film, pas à côté */
+        .carousel-btn.right { right: 5px; }
+
+        .film-list {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 15px 10px 10px 10px; /* ← plus de padding latéral large */
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+        .film-list::-webkit-scrollbar { display: none; }
+
         .film { min-width: 150px; position: relative; flex-shrink: 0; }
         .film p { margin-top: 8px; font-size: 14px; }
         .film img {
@@ -40,6 +77,59 @@ $tabFilm = $rep->getAllFilm();
         .modal-title {
             margin-bottom: 0;
             color: black;
+        }
+
+        /* Hero banner */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.55);
+        }
+        .hero-content {
+            position: absolute;
+            bottom: 60px;
+            left: 50px;
+            z-index: 2;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            margin-bottom: 10px;
+        }
+        .hero-content p {
+            font-size: 1.1rem;
+            color: #ddd;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+        .hero-badge {
+            position: absolute;
+            top: 30px;
+            left: 50px;
+            background: #e50914;
+            color: white;
+            font-weight: bold;
+            font-size: 0.85rem;
+            padding: 5px 14px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .hero-gradient {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 60%;
+            background: linear-gradient(to top, #0b0b0b, transparent);
+            pointer-events: none;
         }
     </style>
 </head>
@@ -57,7 +147,12 @@ $tabFilm = $rep->getAllFilm();
                 <a class="nav-link text-white" href="reservationClient.php">Mes réservations</a>
                 <a class="nav-link text-white" href="profil.php">Profil</a>
                 <form action="../Acteurs/deconnexionActeur.php">
-                    <button type="submit" class="nav-link text-white border-0 bg-transparent">Déconnexion</button>
+                    <button type="submit" class="nav-link text-white">Déconnexion</button>
+                </form>
+            <?php endif; ?>
+            <?php if(!isset($_SESSION["id"])): ?>
+                <form action="../Acteurs/connexionActeur2.php">
+                    <button type="submit" class="nav-link text-white">Connexion</button>
                 </form>
             <?php else: ?>
                 <button type="button" class="nav-link text-white border-0 bg-transparent"
@@ -72,66 +167,66 @@ $tabFilm = $rep->getAllFilm();
         </div>
     </nav>
 
-
-    <div class="modal fade" id="modalCompte" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content rounded-4 border-0 p-2">
-
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title w-100 text-center fw-semibold">Mon compte</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body px-4 pb-4">
-                    <a href="../Acteurs/connexionActeur.php" class="btn w-100 fw-semibold py-3 mb-2"
-                       style="background:#0d1b4c; color:#cccccc; border-radius:12px;">
-                        Me connecter
-                    </a>
-                    <a href="../Acteurs/ajoutActeur.php" class="btn btn-outline-secondary w-100 py-3"
-                       style="border-radius:12px; color:black ">
-                        Créer mon compte
-                    </a>
-                    <hr class="my-3">
-                </div>
-
+    <?php
+    $filmVogue = $rep->getFilmEnVogue();
+    if (isset($filmVogue)) { ?>
+        <div class="hero-banner">
+            <?php if ($filmVogue->getBanniere() != null) { ?>
+                <img src="<?php echo $filmVogue->getBanniere() ?>" alt="banniere">
+            <?php } else { ?>
+                <img src="../../img/default.png" alt="banniere">
+            <?php } ?>
+            <div class="hero-gradient"></div>
+            <span class="hero-badge">🔥 En ce moment</span>
+            <div class="hero-content">
+                <h1><?= htmlspecialchars($filmVogue->getNom()) ?></h1>
+                <p><?= htmlspecialchars(substr($filmVogue->getDescription(), 0, 150)) ?>...</p>
+                <a href="../Films/ficheFilm.php?id=<?= $filmVogue->getIdFilm() ?>"
+                   class="btn btn-danger btn-lg px-4">
+                    ▶ Voir le film
+                </a>
             </div>
         </div>
-    </div>
+    <?php } ?>
 
     <div class="section">
         <div class="header">
             <h2>Films au cinéma</h2>
-            <a href="allFilms.php">Tous les films actuellement au cinéma ></a>
+            <a href="allFilms.php" class="btn btn-danger">Tous les films actuellement au cinéma</a>
         </div>
 
-        <div class="film-list">
-            <?php if (!empty($tabFilm)) { ?>
-                <?php foreach ($tabFilm as $film) { ?>
-                    <div class="film">
-                        <?php
-                        $affiche = $film->getAffiche();
-                        if ($affiche != null && $affiche != "") {
-                            ?>
-                            <form method="POST" action="../Films/ficheFilm.php?id=<?=$film->getIdFilm()?>">
-                                <button class="btn btn-dark" type="submit">
-                                    <img src="<?= $affiche ?>" alt="<?= $film->getNom() ?>">
-                                </button>
-                            </form>
+        <div class="carousel-wrapper">
+            <button class="carousel-btn left" onclick="document.querySelector('.film-list').scrollBy({left: -500, behavior: 'smooth'})">‹</button>
 
-                        <?php } else { ?>
-                            <form method="POST" action="../Films/ficheFilm.php?id=<?=$film->getIdFilm()?>">
-                                <button class="btn btn-dark" type="submit">
-                                    <img src="../../img/default.png" alt="<?= $film->getNom() ?>">
-                                </button>
-                            </form>
-                        <?php } ?>
-                        <p><?= $film->getNom() ?></p>
-                        <a href="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>" class="btn btn-sm btn-outline-light">Info</a>
-                    </div>
+            <div class="film-list">
+                <?php if (!empty($tabFilm)) { ?>
+                    <?php foreach ($tabFilm as $film) { ?>
+                        <div class="film">
+                            <?php
+                            $affiche = $film->getAffiche();
+                            if ($affiche != null && $affiche != "") { ?>
+                                <form method="POST" action="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>">
+                                    <button class="btn btn-dark" type="submit">
+                                        <img src="<?= $affiche ?>" alt="<?= $film->getNom() ?>">
+                                    </button>
+                                </form>
+                            <?php } else { ?>
+                                <form method="POST" action="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>">
+                                    <button class="btn btn-dark" type="submit">
+                                        <img src="../../img/default.png" alt="<?= $film->getNom() ?>">
+                                    </button>
+                                </form>
+                            <?php } ?>
+                            <p><?= $film->getNom() ?></p>
+                            <a href="../Films/ficheFilm.php?id=<?= $film->getIdFilm() ?>" class="btn btn-sm btn-outline-light">Info</a>
+                        </div>
+                    <?php } ?>
+                <?php } else { ?>
+                    <p>Aucun film pour le moment...</p>
                 <?php } ?>
-            <?php } else { ?>
-                <p>Aucun film pour le moment...</p>
-            <?php } ?>
+            </div>
+
+            <button class="carousel-btn right" onclick="document.querySelector('.film-list').scrollBy({left: 500, behavior: 'smooth'})">›</button>
         </div>
     </div>
 

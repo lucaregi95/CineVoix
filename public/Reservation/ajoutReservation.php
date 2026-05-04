@@ -113,6 +113,7 @@ if (!isset($_SESSION['id'])) {
                 $succes = "Réservation effectuée avec succès !";
             }
         }
+
 }
 ?>
 
