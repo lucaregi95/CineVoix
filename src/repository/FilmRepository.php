@@ -21,7 +21,7 @@ class FilmRepository
     }
 
     public function getAllFilmTri(){
-        $sql = "SELECT * FROM Film WHERE date_sortie<=:date ORDER BY date_sortie ASC";
+        $sql = "SELECT * FROM Film WHERE date_sortie<=:date ORDER BY date_sortie DESC";
         $req = $this->connexionBdd->prepare($sql);
         $req->bindValue(':date', date('Y-m-d'));
         $req->execute();
